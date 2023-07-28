@@ -1,0 +1,9 @@
+{
+	"extends": "@guardian/tsconfig",
+	"compilerOptions": {
+		"checkJs": true,
+		"allowImportingTsExtensions": true,
+		"moduleResolution": "Bundler"
+	},
+	"exclude": ["node_modules"]
+}

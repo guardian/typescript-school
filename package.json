@@ -1,0 +1,44 @@
+{
+	"name": "typescript-school",
+	"description": "🧑‍🎓🧑‍🏫🧑‍🎓 Resources for learning more about a common language at the Guardian: TypeScript ",
+	"type": "module",
+	"private": true,
+	"scripts": {
+		"lint": "npm run lint:package && npm run lint:prettier",
+		"lint:prettier": "prettier . --write",
+		"lint:package": "node ./node_modules/@guardian/package-linter/esm/cli.js ./package.json",
+		"week-1-breaking-api-changes": "ts-node-esm 1-breaking-API-changes/server.ts",
+		"week-2-primitives": "echo \"Not implement week two yet\" && exit 1",
+		"week-3-functions": "echo \"Not implement week three yet\" && exit 1",
+		"week-4-narrowing-structural-typing": "echo \"Not implement week four yet\" && exit 1",
+		"week-5-generics": "echo \"Not implement week five yet\" && exit 1",
+		"week-n": "echo \"Not implement week N yet\" && exit 1"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/guardian/typescript-school.git"
+	},
+	"keywords": [
+		"typescript"
+	],
+	"author": "",
+	"license": "Apache-2.0",
+	"bugs": {
+		"url": "https://github.com/guardian/typescript-school/issues"
+	},
+	"homepage": "https://github.com/guardian/typescript-school#readme",
+	"devDependencies": {
+		"@guardian/package-linter": "0.5.3",
+		"@guardian/prettier": "5.0.0",
+		"@guardian/source-foundations": "13.0.0",
+		"@guardian/tsconfig": "0.2.0",
+		"@hono/node-server": "1.1.1",
+		"@types/node": "20.4.5",
+		"hono": "3.3.4",
+		"prettier": "3.0.0",
+		"ts-node": "10.9.1",
+		"tslib": "2.6.1",
+		"typescript": "5.1.6",
+		"zod": "3.21.4"
+	}
+}
