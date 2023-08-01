@@ -28,6 +28,7 @@
 	},
 	"homepage": "https://github.com/guardian/typescript-school#readme",
 	"devDependencies": {
+		"@guardian/libs": "15.6.3",
 		"@guardian/package-linter": "0.5.3",
 		"@guardian/prettier": "5.0.0",
 		"@guardian/source-foundations": "13.0.0",

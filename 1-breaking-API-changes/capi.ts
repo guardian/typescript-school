@@ -2,7 +2,7 @@ import zod, { ZodError } from 'zod';
 import { fetchJSON } from './json.ts';
 
 const fields = zod.object({
-	thumbnail: zod.string().optional(),
+	thumbnail: zod.string().url().optional(),
 	trailText: zod.string().optional(),
 	byline: zod.string().optional(),
 });
@@ -15,10 +15,10 @@ const pillarId = zod.enum([
 	'pillar/lifestyle',
 	'pillar/arts',
 	// @TODO: the pillar can be `undefined` for Labs
-	// Search for “We can be in the sea in seconds”
+	// Search for “Guardian”
 ]);
 
-type Result = zod.output<typeof result>;
+export type Result = zod.output<typeof result>;
 const result = zod.object({
 	pillarId,
 	webPublicationDate: zod.coerce.date(),
