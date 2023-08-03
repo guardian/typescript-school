@@ -5,8 +5,8 @@ import { search } from './capi.ts';
 const app = new Hono();
 
 app.get('/', async (c) => {
-	const q = c.req.query('q') ?? '';
-	const results = q ? await search(q) : [];
+	const query = c.req.query('q');
+	const results = query ? await search(query) : [];
 
 	return c.html(`<!DOCTYPE html>
 <html lang="en">
@@ -19,13 +19,21 @@ app.get('/', async (c) => {
     <h1>Using TypeScript to validate CAPI search queries</h1>
 
     <form>
-        <input name="q" type="search" value="${q}" placeholder="search for…" />
+        <input name="q" type="search" value="${
+					query ?? ''
+				}" placeholder="search for…" />
         <button type="submit">Search</button>
     </form>
 
-    <ul id="results">${results
-			.map((result) => `<li>${result.webTitle}</li>`)
-			.join('\n')}</ul>
+${
+	query
+		? `<ul id="results">${results
+				.map((result) => `<li>${result.webTitle}</li>`)
+				.join('\n')}
+                </ul>`
+		: '<!-- no search query -->'
+}
+    
 </body>
 </html>`);
 });

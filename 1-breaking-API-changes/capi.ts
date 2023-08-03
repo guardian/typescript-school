@@ -1,4 +1,4 @@
-import zod from 'zod';
+import zod, { ZodError } from 'zod';
 import { fetchJSON } from './json.ts';
 
 const fields = zod.object({
@@ -53,9 +53,16 @@ export const search = async (q: string | null): Promise<Result[]> => {
 		'https://content.guardianapis.com/',
 	);
 
-	const {
-		response: { results },
-	} = await fetchJSON(url, { parser: schema.parse });
-
-	return results;
+	try {
+		const {
+			response: { results },
+		} = await fetchJSON(url, { parser: schema.parse });
+		return results;
+	} catch (error) {
+		if (error instanceof ZodError) {
+			console.error('Could not parse JSON response', error);
+			return [];
+		}
+		throw error;
+	}
 };
