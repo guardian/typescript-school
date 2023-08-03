@@ -1,4 +1,4 @@
-import { RequestListener, createServer } from 'http';
+import { RequestListener, createServer } from 'node:http';
 import { search } from './capi.ts';
 
 const host = 'localhost';
