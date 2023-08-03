@@ -1,14 +1,15 @@
-import { serve } from '@hono/node-server';
-import { Hono } from 'hono';
+import { RequestListener, createServer } from 'node:http';
 import { search } from './capi.ts';
 
-const app = new Hono();
+const host = 'localhost';
+const port = 8000;
 
-app.get('/', async (c) => {
-	const query = c.req.query('q');
+const requestListener: RequestListener = async (request, response) => {
+	const url = new URL(request.url ?? '/', `http://${request.headers.host}`);
+	const query = url.searchParams.get('q');
 	const results = query ? await search(query) : [];
 
-	return c.html(`<!DOCTYPE html>
+	response.end(`<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -36,7 +37,9 @@ ${
     
 </body>
 </html>`);
-});
+};
 
-serve(app);
-console.log('Listening on http://localhost:3000/');
+const server = createServer(requestListener);
+server.listen(port, host, () => {
+	console.log(`Server is running on http://${host}:${port}`);
+});
