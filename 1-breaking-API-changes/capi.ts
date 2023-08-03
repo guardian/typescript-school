@@ -7,12 +7,26 @@ const fields = zod.object({
 	byline: zod.string().optional(),
 });
 
+export type PillarId = zod.output<typeof pillarId>;
+const pillarId = zod.enum([
+	'pillar/news',
+	'pillar/opinion',
+	'pillar/sport',
+	'pillar/lifestyle',
+	'pillar/arts',
+	// @TODO: the pillar can be `undefined` for Labs
+	// Search for “We can be in the sea in seconds”
+]);
+
 type Result = zod.output<typeof result>;
 const result = zod.object({
-	pillarId: zod.string().optional(),
-	webPublicationDate: zod.string(),
+	pillarId,
+	webPublicationDate: zod.coerce.date(),
 	webTitle: zod.string(),
-	webUrl: zod.string(),
+	webUrl: zod
+		.string()
+		.url()
+		.transform((url) => new URL(url)),
 	fields,
 });
 

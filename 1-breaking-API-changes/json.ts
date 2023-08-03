@@ -1,4 +1,8 @@
 export const fetchJSON = async <T>(
+	/**
+	 * Grab the first argument from the global `fetch` method
+	 * @see https://www.typescriptlang.org/docs/handbook/utility-types.html#parameterstype
+	 */
 	url: Parameters<typeof fetch>[0],
 	{
 		headers,

@@ -1,9 +1,12 @@
 {
+	// the Guardian’s recommended TypeScript config
+	// See https://github.com/guardian/csnx/tree/main/libs/%40guardian/tsconfig
 	"extends": "@guardian/tsconfig",
 	"compilerOptions": {
 		"checkJs": true,
+		// before TS 5.0 you could not import files with an `.ts` extension, and had to rely on either `.js` or omitting the extension entirely and relying on the node module resolution algorithm. This setting is more explicit about what files is actually imported
 		"allowImportingTsExtensions": true,
-		"moduleResolution": "Bundler"
+		"moduleResolution": "Bundler" // required for `allowImportingTsExtensions`
 	},
 	"exclude": ["node_modules"]
 }
