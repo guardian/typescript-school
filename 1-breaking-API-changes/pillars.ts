@@ -1,16 +1,25 @@
 import { palette } from '@guardian/source-foundations';
 import { PillarId } from './capi';
-
-type Palette<T extends keyof typeof palette> =
+/**
+ * This utility type extracts a union of all the possible colours
+ * for any given key of `palette`, such as `brand`, `neutral`, etc.
+ *
+ * Allows to narrow usage of colours down to a specific subset of colours,
+ * allowing the narrowest possible `styles` object.
+ */
+type PaletteColour<T extends keyof typeof palette> =
 	(typeof palette)[T][keyof (typeof palette)[T]];
 
-type PillarColour =
-	| Palette<'neutral'>
-	| Palette<'news'>
-	| Palette<'opinion'>
-	| Palette<'sport'>
-	| Palette<'culture'>
-	| Palette<'lifestyle'>;
+/**
+ * The five Guardian pillars, driven from Source’s palette.
+ * @see https://www.typescriptlang.org/docs/handbook/utility-types.html#extracttype-union */
+type Pillar = Extract<
+	keyof typeof palette,
+	'news' | 'opinion' | 'sport' | 'culture' | 'lifestyle'
+>;
+
+/** Colour palettes for the five pillars, plus the neutral set */
+type PillarColour = PaletteColour<Pillar> | PaletteColour<'neutral'>;
 
 const styles = {
 	news: {
@@ -43,12 +52,13 @@ const styles = {
 		text: palette.neutral[10],
 		background: palette.neutral[97],
 	},
+	// as const satisfies allows to have the actual value of the object,
+	// but ensure that it still matches a specific shape
+	// https://www.typescriptlang.org/docs/handbook/release-notes/typescript-4-9.html#the-satisfies-operator
 } as const satisfies Record<
-	string,
+	Pillar,
 	Record<'border' | 'headline' | 'text' | 'background', PillarColour>
 >;
-
-type Pillar = keyof typeof styles;
 
 export const pillarStyles = (pillars: Set<PillarId>) =>
 	[...pillars]
