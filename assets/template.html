@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en-GB">
+
+<head>
+    <title><!-- TITLE --></title>
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+            font-size: 36px;
+            font-family: system-ui, sans-serif;
+            color: #24292e;
+        }
+
+        html {
+            scroll-snap-type: y mandatory;
+        }
+
+        main {
+            display: flex;
+            flex-direction: column;
+        }
+
+        article {
+            box-sizing: border-box;
+            position: relative;
+            height: 100dvh;
+            width: 100dvw;
+            scroll-snap-align: center;
+            padding: 2rem;
+        }
+
+        article aside {
+            opacity: 0.6;
+            position: absolute;
+            bottom: 1rem;
+            right: 1rem;
+        }
+
+        pre {
+            padding: 0.5em;
+            border: 2px solid #eee;
+            overflow: scroll;
+        }
+
+
+        :is(h1, h2, h3, p)>code {
+            padding: 0;
+            color: #6f42c1;
+        }
+    </style>
+    <!-- STYLES -->
+</head>
+
+<body>
+    <main>
+        <!-- MAIN -->
+    </main>
+</body>
+
+</html>
