@@ -1,2 +1,5 @@
 node_modules
 
+# https://github.com/guardian/recommendations/blob/main/VSCode.md#do-not-commit-vscode
+.vscode
+
