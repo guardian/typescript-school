@@ -9,9 +9,15 @@ export const fetchJSON = async <T>(
 		parser,
 	}: {
 		headers?: HeadersInit;
-		parser: (data: unknown) => T | Promise<T>;
+		parser: (
+			data: unknown,
+		) => { success: true; data: T } | { success: false; error: unknown };
 	},
-): Promise<T> => {
-	const data: unknown = await fetch(url, { headers }).then((r) => r.json());
-	return parser(data);
+): Promise<{ success: true; data: T } | { success: false; error: unknown }> => {
+	try {
+		const data: unknown = await fetch(url, { headers }).then((r) => r.json());
+		return parser(data);
+	} catch (error) {
+		return { success: false, error };
+	}
 };

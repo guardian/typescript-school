@@ -1,4 +1,4 @@
-import zod, { ZodError } from 'zod';
+import zod from 'zod';
 import { fetchJSON } from './json.ts';
 
 const fields = zod.object({
@@ -40,6 +40,7 @@ const schema = zod.object({
 export const search = async (q: string | null): Promise<Result[]> => {
 	if (!q) return [];
 
+	/** @see https://open-platform.theguardian.com/documentation/search */
 	const params = new URLSearchParams({
 		q,
 		orderBy: 'newest', // not "relevance"
@@ -53,16 +54,12 @@ export const search = async (q: string | null): Promise<Result[]> => {
 		'https://content.guardianapis.com/',
 	);
 
-	try {
-		const {
-			response: { results },
-		} = await fetchJSON(url, { parser: schema.parse });
-		return results;
-	} catch (error) {
-		if (error instanceof ZodError) {
-			console.error('Could not parse JSON response', error);
-			return [];
-		}
-		throw error;
+	const parsed = await fetchJSON(url, { parser: schema.safeParse });
+
+	if (parsed.success) {
+		return parsed.data.response.results;
 	}
+
+	console.error('Could not parse JSON response', parsed.error);
+	return [];
 };
