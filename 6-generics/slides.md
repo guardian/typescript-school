@@ -4,6 +4,8 @@ Generics provide a way to make code more reusable.
 
 There's a chapter on them in the TypeScript handbook: https://www.typescriptlang.org/docs/handbook/2/generics.html
 
+---
+
 ## An Identity Function For Numbers
 
 This is an "identity" function for `number`s. It takes a `number` and returns it unchanged. It's probably one of the simplest functions you could write.
@@ -11,6 +13,8 @@ This is an "identity" function for `number`s. It takes a `number` and returns it
 ```ts
 const identity = (a: number): number => a;
 ```
+
+---
 
 ## More Identity Functions
 
@@ -20,6 +24,8 @@ The previous example only provided an identity function for `number`s. If you wa
 const identityNumber = (a: number): number => a;
 const identityString = (a: string): string => a;
 ```
+
+---
 
 ## Even More Identity Functions
 
@@ -32,6 +38,8 @@ const identityArrayNumber = (a: Array<number>): Array<number> => a;
 const identityArrayString = (a: Array<string>): Array<string> => a;
 ```
 
+---
+
 ## A Better Way?
 
 This is where generics are useful. This example actually already demonstrates a use of generics, the `Array` type, which will be covered in more detail later.
@@ -40,10 +48,12 @@ This is where generics are useful. This example actually already demonstrates a 
 const identityNumber = (a: number): number => a;
 const identityString = (a: string): string => a;
 const identityArrayNumber = (a: Array<number>): Array<number> => a;
-                                -------------   -------------
+//                              -------------   -------------
 const identityArrayString = (a: Array<string>): Array<string> => a;
-                                -------------   -------------
+//                              -------------   -------------
 ```
+
+---
 
 ## The (Generic) Identity Function
 
@@ -55,6 +65,8 @@ const identity = <A>(a: A): A => a;
 
 This takes a value of type `A` and returns that same value of type `A`.
 
+---
+
 ## Type Parameters
 
 The angle brackets (`<>`) define **type parameters**, to go along with the **value parameters** between standard brackets (`()`).
@@ -65,6 +77,8 @@ const identity = <A>(a: A): A => a;
 
 Value parameters, like `a`, are given a name and can be referred to by that name throughout the rest of the function definition. The same is true of type parameters; the name of the type given between the angle brackets can then be used to refer to that type elsewhere in the function. In this case `A` is used both to annotate the value parameter, `a`, and as the function's return type.
 
+---
+
 ## Using The Generic Identity Function
 
 When calling generic functions, you pass the value parameters between standard brackets (`()`) and type parameters between angle brackets (`<>`).
@@ -74,6 +88,8 @@ const num: number = identity<number>(42);
 const string: string = identity<string>('news');
 const pillar: Pillar = identity<Pillar>(Culture);
 ```
+
+---
 
 ## Type Inference
 
@@ -86,6 +102,8 @@ const pillar: Pillar = identity(Culture);
 ```
 
 Sometimes you get type errors because TypeScript can't correctly figure out what the type of a type parameter should be. These can be fixed by adding it back in again.
+
+---
 
 ## Comparison With The `any` Type
 
@@ -104,6 +122,8 @@ When `identity` is called with a type like `number` passed in as the type parame
 
 If the return type were `any` instead then this would be allowed and no type error would occur.
 
+---
+
 ## Generic Types
 
 It's not just functions that can suffer from repetition; types can too. Arrays, for example, can have elements that could be lots of different types. It would be repetitive to have to define a different array type, including all the methods like `.map`, for each type an array could contain.
@@ -115,6 +135,8 @@ const pillars: PillarArray = [News, Opinion, Culture];
 ```
 
 Also, given that the array type is built into TypeScript itself, it might be difficult to create a version of the array type for custom types like `Pillar` above.
+
+---
 
 ## The (Generic) Array Type
 
@@ -138,6 +160,8 @@ type Array<Element> = {
 
 Generic types are similar to generic functions in that they take a set of type parameters inside a pair of angle brackets (`<>`).
 
+---
+
 ## Using Generic Type Parameters
 
 As with functions, the type parameter can be used elsewhere in the type definition.
@@ -150,6 +174,8 @@ type Array<Element> = {
 ```
 
 The `includes` methods checks whether an array contains a given element. The type definition ensures that you can't call this method with a value that isn't of the same type as the elements in the array.
+
+---
 
 ## Generic Classes
 
@@ -167,6 +193,8 @@ class Array<Element> {
 }
 ```
 
+---
+
 ## Implementations Of Generic Functions
 
 Let's assume you don't know what the implementation of this function is, you only have the type. What possible implementations could it have?
@@ -176,6 +204,8 @@ const identity = <A>(a: A): A => ???;
 ```
 
 There is *only one* possible implementation of this function (excluding side effects), and that is to return `a`. It's not possible to call `.length` because `A` might not be an array type. It's not possible to add anything with `+` because `A` might not be a `number` or a `string` type.
+
+---
 
 ## Limiting What A Function Is Allowed To Do
 
@@ -187,6 +217,8 @@ const identity = (a: string): string => ???;
 
 This function could return the same `string`; or a completely different `string`; or the same `string` reversed; or a substring; or the given `string` concatenated with another `string`; and so on.
 
+---
+
 ## Limitations Of Generic Types?
 
 The ability to limit what a function can do by making it generic is useful. However, sometimes it's also useful to know a little bit more about what features a generic type might have.
@@ -197,6 +229,8 @@ const getLength = <A>(a: A): number => a.length;
 
 The `getLength` function here gives a type error, because `a` might not have a property `length`.
 
+---
+
 ## Dropping Generic Types?
 
 One way to solve this might be to drop generics and use a specific type instead.
@@ -206,6 +240,8 @@ const getLength = (a: string): number => a.length;
 ```
 
 This works for `string`s, but it doesn't work for other types with length, like `Array`s. One option would be to extend the definition to include `Array`, but it might not be possible to predict all the types you might want to use this function with in future, and include them in the definition.
+
+---
 
 ## Generic Constraints
 
@@ -221,6 +257,8 @@ const getLength = <A extends HasLength>(a: A): number => a.length;
 
 Here the `extends` keyword says that `A` has to be a type that includes the `length` property. It can be any type that has this property, like `string` or `Array`, but it can't be a type that doesn't, like `number`.
 
+---
+
 ## Multiple Type Parameters
 
 Multiple type parameters work in much the same way as multiple value parameters.
@@ -228,6 +266,8 @@ Multiple type parameters work in much the same way as multiple value parameters.
 ```ts
 const f = <A, B, C>(a: A, b: B): C => ???;
 ```
+
+---
 
 ## Type Parameter Defaults
 
