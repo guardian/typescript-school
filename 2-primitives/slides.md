@@ -118,3 +118,16 @@ TypeScript also supports other advanced primitive types like bigint for arbitrar
 TypeScript infers the return type of functions based on their implementation. Explicitly annotating return types is often not required.
 
 ---
+
+```ts
+
+type AlbumName = string;
+
+type Album = {
+  name: AlbumName
+  copiesSold: number
+};
+
+const albumName: AlbumName = 'Kind of Blue';
+albumName;
+```
