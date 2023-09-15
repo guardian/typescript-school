@@ -148,6 +148,8 @@ const strings: Array<string> = ['news', 'opinion', 'culture'];
 const pillars: Array<Pillar> = [News, Opinion, Culture];
 ```
 
+---
+
 ## Writing Generic Types
 
 If you were writing the `Array` type yourself, it might look something like this:
