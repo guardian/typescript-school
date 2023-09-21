@@ -8,12 +8,31 @@ _“JavaScript which scales”_ is a tag line, read more at [“Why Create TypeS
 
 ## A compiler for JavaScript
 
-The following code works directly in your browser:
+Valid JavaScript is always valid TypeScript.
 
-```ts
+```js
+let variable;
+variable = true;
+variable = { id: 'guardian' };
+variable = 'invalid';
+
+console.log(variable.id);
+```
+
+TypeScript analyses your code, and can catch errors related to JavaScript dynamic types.
+Common examples include:
+
+- invalid parameters
+- wrong object shape
+- …
+
+---
+
+Let’s take the following code, which would runs directly in your browser:
+
+```js
 const li = document.createElement('li');
 document.querySelector('ul').appendChild(li);
-//                          ~
 ```
 
 But what happens when there’s no `<ul>` on the page?
