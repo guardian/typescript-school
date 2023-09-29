@@ -1,8 +1,6 @@
-# Narrowing and Structural Typing
+# Narrowing
 
 There's a chapter covering narrowing in the TypeScript handbook: https://www.typescriptlang.org/docs/handbook/2/narrowing.html
-
-There's also a brief section describing structural typing: https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes.html#structural-type-system
 
 ---
 
@@ -514,7 +512,3 @@ const logElement = (element: Element): void => {
 When `kind` is `'Image'` TypeScript knows that it can narrow the type of `Element` to an `Image` and allow access to the `width` and `height` fields. When `kind` is `'Text'` TypeScript knows that it can narrow the type of `Element` to `Text` and allow access to the `copy` field.
 
 ---
-
-## Structural Typing
-
-Don't have to consider it too often, but it's a useful feature. Different to Scala.
