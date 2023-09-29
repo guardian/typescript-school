@@ -352,7 +352,168 @@ Calling this function with `0` will result in `0` being returned.
 
 ## `instanceof`
 
+In some situations it may be useful to check whether a value is an instance of a particular class, perhaps to access methods on that class. Another feature of JavaScript, the `instanceof` operator, can be used here.
+
+```ts
+const dateString = (date: string | Date): string => {
+    if (date instanceof Date) {
+        return date.toUTCString();
+    }
+
+    return date;
+}
+```
+
+The `if` condition uses `instanceof` to check that `date` is an instance of the `Date` class. Then, inside the `if` statement, it's possible to access the `toUTCString` method that's available on instances of that class.
+
+There will be more on classes in session 5.
+
+---
+
+## Union Types
+
+There have been several examples so far of what TypeScript refers to as **union types**, which are formed from a combination (a union) of other types.
+
+```ts
+// A union of the `number` and `string` types
+type Padding = number | string;
+// A union of string literal types
+type Pillar = 'News' | 'Opinion' | 'Sport' | 'Lifestyle' | 'Culture';
+// A union of the `HTMLElement` and `null` types
+type MaybeElement = HTMLElement | null;
+// A union of the `string` and `Date` types
+type StringOrDate = string | Date;
+// Built into TypeScript: a union of `true` and `false`
+type boolean = true | false;
+```
+
+Each of the sub-types of a union type is referred to as a "member" of the union. A value can be any one of these member types, and often it's necessary to figure out which one in order to interact with it. This is where narrowing comes in.
+
+---
+
+## Complex Unions: Element
+
+Unions are useful for representing all kinds of application states. In many cases, unions of simple types, like primitives, are enough. Often, though, more complex structures are needed.
+
+To take an example, it may be useful to write a type that represents different kinds of content that can appear in an article:
+
+1. Text: a paragraph of text
+2. Image: with a width, height, and a url
+
+---
+
+## An Element With Fields
+
+A common way to represent data with multiple fields in JavaScript is with an object. There are multiple kinds of elements in this example, so a field with a union type could be included to specify this.
+
+```ts
+type Element = {
+    kind: 'Text' | 'Image';
+    copy: string;
+    width: number;
+    height: number;
+    url: string;
+}
+```
+
+There's a problem with this type, however, because when the element is an Image it won't have data to populate the `copy` field, and when it's Text it won't have data to populate `width`, `height` or `url`.
+
+---
+
+## An Element With Optional Fields
+
+One way to deal with data that might not be present is to mark its field as optional. In this case all of these data fields could be missing for some kind of element, so they're all marked as optional.
+
+```ts
+type Element = {
+    kind: 'Text' | 'Image';
+    copy?: string;
+    width?: number;
+    height?: number;
+    url?: string;
+}
+```
+
+---
+
+## Using An Element With Optional Fields
+
+Having defined a type for `Element`, it should be possible to start using it in code.
+
+```ts
+const logElement = (element: Element): void =>
+    console.log(`Image with aspect ratio: ${element.width / element.height}`)
+```
+
+However, this results in two errors.
+
+```
+'element.width' is possibly 'undefined'.
+```
+
+```
+'element.height' is possibly 'undefined'.
+```
+
+---
+
+## Narrowing Element?
+
+Only images have a `width` and `height`, so it would be useful to be able to narrow the type of `Element` to an image before attempting to retrieve those fields. The `kind` field could be used for this:
+
+```ts
+const logElement = (element: Element): void => {
+    if (element.kind === 'Image') {
+        console.log(`Image with aspect ratio: ${element.width / element.height}`);
+    }
+}
+```
+
+Unfortunately this doesn't work and the errors still appear. The compiler has no way to know the `width` and `height` fields will always be there for image because the type doesn't say that: it says they may be missing at all times, even when `kind` is `'Image'`.
+
+---
+
 ## Discriminated Unions
+
+It is possible to check fields are present before using them. However, for objects representing multiple exclusive states with multiple fields, this sort of code can become both difficult to reason about and error-prone. A more robust solution is to change the way `Element` is represented to take advantage of a feature TypeScript calls **Discriminated Unions**:
+
+```ts
+type Text = {
+    kind: 'Text';
+    copy: string;
+}
+
+type Image = {
+    kind: 'Image';
+    width: number;
+    height: number;
+    url: string;
+}
+
+type Element = Text | Image;
+```
+
+`Element` is either a `Text` or an `Image`. When it's a `Text` the `copy` field is present and the other fields are not. When it's an `Image` the `width`, `height` and `url` fields are present and the `copy` field is not.
+
+---
+
+## Using Discriminated Unions
+
+The key feature of discriminated unions is that they share a common field, called a *discriminant*, that can be checked to narrow the type. In this example this field is called `kind`.
+
+```ts
+const logElement = (element: Element): void => {
+    if (element.kind === 'Image') {
+        console.log(`Image with aspect ratio: ${element.width / element.height}`);
+    } else {
+        console.log(`Text with ${element.copy.split(' ').length} words`);
+    }
+}
+```
+
+When `kind` is `'Image'` TypeScript knows that it can narrow the type of `Element` to an `Image` and allow access to the `width` and `height` fields. When `kind` is `'Text'` TypeScript knows that it can narrow the type of `Element` to `Text` and allow access to the `copy` field.
+
+---
 
 ## Structural Typing
 
