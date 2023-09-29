@@ -389,7 +389,7 @@ Each of the sub-types of a union type is referred to as a "member" of the union.
 
 ---
 
-## Complex Unions: Element
+## Complex Unions: Element
 
 Unions are useful for representing all kinds of application states. In many cases, unions of simple types, like primitives, are enough. Often, though, more complex structures are needed.
 
@@ -434,7 +434,7 @@ type Element = {
 
 ---
 
-## Using An Element With Optional Fields
+## Using An Element With Optional Fields
 
 Having defined a type for `Element`, it should be possible to start using it in code.
 
@@ -455,7 +455,7 @@ However, this results in two errors.
 
 ---
 
-## Narrowing Element?
+## Narrowing Element?
 
 Only images have a `width` and `height`, so it would be useful to be able to narrow the type of `Element` to an image before attempting to retrieve those fields. The `kind` field could be used for this:
 
@@ -495,7 +495,7 @@ type Element = Text | Image;
 
 ---
 
-## Using Discriminated Unions
+## Using Discriminated Unions
 
 The key feature of discriminated unions is that they share a common field, called a *discriminant*, that can be checked to narrow the type. In this example this field is called `kind`.
 
