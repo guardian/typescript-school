@@ -2,6 +2,11 @@ import { isNonNullable, timeAgo } from '@guardian/libs';
 import { Result } from './capi.ts';
 import { pillarMappings } from './pillars.ts';
 
+/**
+ * **Concepts**: Functions
+ *
+ * Minimal representation of a result card for an article
+ */
 export const card = ({
 	fields: { byline, thumbnail, trailText },
 	webPublicationDate,

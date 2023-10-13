@@ -18,6 +18,7 @@ const pillarId = zod.enum([
 	// Search for “Guardian”
 ]);
 
+/** **Concepts**: Generics */
 export type Result = zod.output<typeof result>;
 const result = zod.object({
 	pillarId,

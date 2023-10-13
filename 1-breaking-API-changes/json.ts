@@ -1,3 +1,8 @@
+/**
+ * **Concepts**: Functions, Generics
+ *
+ * Safely get JSON from an endpoint that matches a specific schema.
+ */
 export const fetchJSON = async <T>(
 	/**
 	 * Grab the first argument from the global `fetch` method
