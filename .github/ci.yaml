@@ -1,0 +1,17 @@
+on:
+  pull_request:
+
+jobs:
+  prettier:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-node@v3
+      with:
+        node-version-file: '.nvmrc'
+
+    - run: npm install --frozen-lockfile
+
+    - name: Formatting
+      run: npx prettier . --check
+
+    - name: Linting package
+      run: npm run lint:package
