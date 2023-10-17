@@ -57,10 +57,9 @@ const requestListener: RequestListener = async (request, response) => {
 						.filter((name) => name.match(STARTS_WITH_DIGIT))
 						.map(
 							(session) =>
-								`<li><a href="/${session}">${session.replace(
-									STARTS_WITH_DIGIT,
-									'',
-								)}</a></li>`,
+								`<li><a href="/${session}">${session
+									.replace(STARTS_WITH_DIGIT, '')
+									.replaceAll('-', ' ')}</a></li>`,
 						)
 						.join('\n')}</ol>`,
 				),

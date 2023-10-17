@@ -7,9 +7,14 @@ import { card } from './card.ts';
 const host = 'localhost';
 const port = 8000;
 
+/**
+ * **Concepts**: Functions
+ */
 const requestListener: RequestListener = async (request, response) => {
 	const url = new URL(request.url ?? '/', `http://${request.headers.host}`);
 	const query = url.searchParams.get('q');
+
+	/** always an array, even if no results are found */
 	const results = query ? await search(query) : [];
 
 	response.end(`<!DOCTYPE html>

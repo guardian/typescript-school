@@ -1,6 +1,8 @@
 import { palette } from '@guardian/source-foundations';
 import { PillarId } from './capi';
 /**
+ * **Concepts**: Generics
+ *
  * This utility type extracts a union of all the possible colours
  * for any given key of `palette`, such as `brand`, `neutral`, etc.
  *
@@ -11,14 +13,22 @@ type PaletteColour<T extends keyof typeof palette> =
 	(typeof palette)[T][keyof (typeof palette)[T]];
 
 /**
+ * **Concepts**: Narrowing, Generics
+ *
  * The five Guardian pillars, driven from Source’s palette.
- * @see https://www.typescriptlang.org/docs/handbook/utility-types.html#extracttype-union */
+ *
+ * @see https://www.typescriptlang.org/docs/handbook/utility-types.html#extracttype-union
+ */
 type Pillar = Extract<
 	keyof typeof palette,
 	'news' | 'opinion' | 'sport' | 'culture' | 'lifestyle'
 >;
 
-/** Colour palettes for the five pillars, plus the neutral set */
+/**
+ * **Concepts**: Narrowing
+ *
+ * Colour palettes for the five pillars, plus the neutral set
+ */
 type PillarColour = PaletteColour<Pillar> | PaletteColour<'neutral'>;
 
 const styles = {
@@ -60,6 +70,15 @@ const styles = {
 	Record<'border' | 'headline' | 'text' | 'background', PillarColour>
 >;
 
+/**
+ * **Concepts**: Functions
+ *
+ * Generate appropriates styles for a set of pillars,
+ * which prevents unused styles from being generated.
+ *
+ * CSS custom properties (variables) are used to scope dynamic styles
+ * @see https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties
+ */
 export const pillarStyles = (pillars: Set<PillarId>) =>
 	[...pillars]
 		.map((pillar) => pillarMappings[pillar])
@@ -73,6 +92,9 @@ export const pillarStyles = (pillars: Set<PillarId>) =>
 		])
 		.join('\n');
 
+/**
+ * **Concepts**: Narrowing, Generics
+ */
 export const pillarMappings = {
 	'pillar/news': 'news',
 	'pillar/opinion': 'opinion',
