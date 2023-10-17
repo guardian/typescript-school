@@ -24,8 +24,8 @@ Valid JavaScript can be interpreted by TypeScript.
 ```js
 let variable;
 variable = true;
-variable = { id: "guardian" };
-variable = "invalid";
+variable = { id: 'guardian' };
+variable = 'invalid';
 
 console.log(variable.id);
 //                   ^^
@@ -54,16 +54,16 @@ dynamic types.
 Let’s take the following code, which would runs directly in your browser:
 
 ```js
-const li = document.createElement("li");
-document.querySelector("ul").appendChild(li);
+const li = document.createElement('li');
+document.querySelector('ul').appendChild(li);
 ```
 
 But what happens when there’s no `<ul>` on the page?\
 The TypeScript compiler encourages handling this case.
 
 ```ts
-const li = document.createElement("li");
-document.querySelector("ul")?.appendChild(li);
+const li = document.createElement('li');
+document.querySelector('ul')?.appendChild(li);
 //                          ^ conditional chaining
 ```
 
