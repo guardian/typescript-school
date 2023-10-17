@@ -5,7 +5,7 @@
 	"private": true,
 	"scripts": {
 		"lint": "npm run lint:package && npm run lint:prettier",
-		"lint:prettier": "prettier . --write",
+		"lint:prettier": "npx prettier . --write",
 		"lint:package": "node ./node_modules/@guardian/package-linter/esm/cli.js ./package.json",
 		"start": "ts-node-esm server.ts",
 		"week-1-breaking-api-changes": "ts-node-esm 1-breaking-API-changes/server.ts",
@@ -36,7 +36,7 @@
 		"@guardian/tsconfig": "0.2.0",
 		"@hono/node-server": "1.1.1",
 		"@types/node": "20.4.5",
-		"prettier": "3.0.0",
+		"prettier": "3.0.3",
 		"rehype-highlight": "6.0.0",
 		"rehype-stringify": "9.0.4",
 		"remark-gfm": "3.0.1",

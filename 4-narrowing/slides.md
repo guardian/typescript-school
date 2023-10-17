@@ -20,7 +20,7 @@ To implement the "spaces" functionality you can repeat a `string` containing a s
 
 ```ts
 const padLeft = (padding: number | string, input: string): string =>
-    " ".repeat(padding) + input;
+	' '.repeat(padding) + input;
 ```
 
 However, this results in a type error, referring specifically to the argument that's been passed to the `repeat` method:
@@ -40,10 +40,10 @@ In order to use `repeat`, it's necessary to first check that `padding` is a `num
 
 ```ts
 const padLeft = (padding: number | string, input: string): string => {
-    if (typeof padding === 'number') {
-        return " ".repeat(padding) + input;
-    }
-}
+	if (typeof padding === 'number') {
+		return ' '.repeat(padding) + input;
+	}
+};
 ```
 
 `typeof` is not special TypeScript syntax. It's part of JavaScript, and for any value will return one of the following strings:
@@ -67,10 +67,10 @@ In this example, when applied to `padding`, `typeof` should return either `'stri
 
 ```ts
 const padLeft = (padding: number | string, input: string): string => {
-    if (typeof padding === 'number') {
-        return " ".repeat(padding) + input;
-    }
-}
+	if (typeof padding === 'number') {
+		return ' '.repeat(padding) + input;
+	}
+};
 ```
 
 Even though this is a JavaScript feature, and won't actually be applied until the code runs, TypeScript can still make use of it. TypeScript knows that if this condition is `true`, then when we're inside the `if` block `padding` will definitely be a `number`. Therefore, for any code inside this block, it's able to **narrow** the type of `padding` from `number | string` to `number`.
@@ -85,10 +85,10 @@ As the type of `padding` inside the `if` block is now `number`, there is no long
 
 ```ts
 const padLeft = (padding: number | string, input: string): string => {
-    if (typeof padding === 'number') {
-        return " ".repeat(padding) + input;
-    }
-}
+	if (typeof padding === 'number') {
+		return ' '.repeat(padding) + input;
+	}
+};
 ```
 
 However, there is now a final error related to the return type of the function.
@@ -107,15 +107,15 @@ There are two ways to address a type error related to implicitly returning funct
 
 ```ts
 const padLeft = (padding: number | string, input: string): string => {
-    if (typeof padding === 'number') {
-        return " ".repeat(padding) + input;
-    }
+	if (typeof padding === 'number') {
+		return ' '.repeat(padding) + input;
+	}
 
-    return padding + input;
-}
+	return padding + input;
+};
 ```
 
-For this final `return` statement TypeScript is again able to perform some narrowing. It knows that if `padding` were a `number` then the above condition would be `true`, and the function would have returned in the body of the `if` block. Therefore if the code has reached this final `return` statement then `padding` is definitely *not* a `number`, and therefore must be a `string`.
+For this final `return` statement TypeScript is again able to perform some narrowing. It knows that if `padding` were a `number` then the above condition would be `true`, and the function would have returned in the body of the `if` block. Therefore if the code has reached this final `return` statement then `padding` is definitely _not_ a `number`, and therefore must be a `string`.
 
 ---
 
@@ -125,10 +125,10 @@ Adding return types to functions can better capture their intended behaviour and
 
 ```ts
 const padLeft = (padding: number | string, input: string) => {
-    if (typeof padding === 'number') {
-        return " ".repeat(padding) + input;
-    }
-}
+	if (typeof padding === 'number') {
+		return ' '.repeat(padding) + input;
+	}
+};
 ```
 
 > **Note:** There is a compiler option called `noImplicitReturns` that will produce a compiler error whenever a function has code paths that result in an implicit `return` statement: https://www.typescriptlang.org/tsconfig#noImplicitReturns
@@ -153,14 +153,14 @@ Checks like `typeof padding === 'number'` are known as "type guards". They allow
 
 ```ts
 const logMessage = (error: string | number | object): string => {
-    if (typeof error === 'string') {
-        return `Error with message: ${error}`;
-    } else if (typeof error === 'number') {
-        return `Error with error code: ${error}`;
-    } else if (typeof error === 'object') {
-        return `Error with data: ${error}`;
-    }
-}
+	if (typeof error === 'string') {
+		return `Error with message: ${error}`;
+	} else if (typeof error === 'number') {
+		return `Error with error code: ${error}`;
+	} else if (typeof error === 'object') {
+		return `Error with data: ${error}`;
+	}
+};
 ```
 
 These type guards are not limited to `typeof`; there are several kinds that TypeScript can use to derive the type of a value.
@@ -204,17 +204,17 @@ type Theme = Pillar | Special;
 const pillarColour = (pillar: Pillar): string => 'red';
 
 const headlineColour = (theme: Theme): string => {
-    switch (theme) {
-        case 'News':
-        case 'Opinion':
-        case 'Sport':
-        case 'Lifestyle':
-            return pillarColour(theme);
-        case 'SpecialReport':
-        case 'Labs':
-            return 'grey';
-    }
-}
+	switch (theme) {
+		case 'News':
+		case 'Opinion':
+		case 'Sport':
+		case 'Lifestyle':
+			return pillarColour(theme);
+		case 'SpecialReport':
+		case 'Labs':
+			return 'grey';
+	}
+};
 ```
 
 A `switch` statement works just like an `if` statement to narrow the type. The `case` statements mean `theme` can only be one of the four pillars when `pillarColour` is called.
@@ -235,17 +235,17 @@ type Pillar = 'News' | 'Opinion' | 'Sport' | 'Lifestyle' | 'Culture';
 
 ```ts
 const headlineColour = (theme: Theme): string => {
-    switch (theme) {
-        case 'News':
-        case 'Opinion':
-        case 'Sport':
-        case 'Lifestyle':
-            return pillarColour(theme);
-        case 'SpecialReport':
-        case 'Labs':
-            return 'grey';
-    }
-}
+	switch (theme) {
+		case 'News':
+		case 'Opinion':
+		case 'Sport':
+		case 'Lifestyle':
+			return pillarColour(theme);
+		case 'SpecialReport':
+		case 'Labs':
+			return 'grey';
+	}
+};
 ```
 
 As the function has an explicit return type TypeScript again gives the following error, because the `switch` statement does not handle the `Culture` case, and so the function is implicitly returning `undefined`:
@@ -266,16 +266,16 @@ It's common to use `switch` statements when working with unions or enums, and th
 const pillarColour = (pillar: Pillar): string => 'red';
 
 const headlineColour = (theme: Theme): string => {
-    switch (theme) {
-        case 'News':
-        case 'Opinion':
-        case 'Sport':
-        case 'Lifestyle':
-            return pillarColour(theme);
-        default:
-            return 'grey';
-    }
-}
+	switch (theme) {
+		case 'News':
+		case 'Opinion':
+		case 'Sport':
+		case 'Lifestyle':
+			return pillarColour(theme);
+		default:
+			return 'grey';
+	}
+};
 ```
 
 However, doing this will hide the consequences of adding `'Culture'` to `Pillar`. That change will no longer result in a type error, because the `default` case will handle `'Culture'`. This is problably not correct, as it will return `'grey'` rather than `'red'` like the other pillars. Sometimes it's preferable to be explicit and avoid this kind of general matching, as it limits how much help the compiler can provide.
@@ -290,7 +290,7 @@ It's common in TypeScript codebases to have types that include `null` or `undefi
 const element: HTMLElement | null = document.getElementById('element');
 
 if (element !== null) {
-    console.log(element.textContent);
+	console.log(element.textContent);
 }
 ```
 
@@ -304,7 +304,7 @@ JavaScript has the ability to implicitly convert many values to `true` or `false
 const element: HTMLElement | null = document.getElementById('element');
 
 if (element) {
-    console.log(element.textContent);
+	console.log(element.textContent);
 }
 ```
 
@@ -318,12 +318,12 @@ Relying on implicit behaviour can lead to unexpected results. In this case a fun
 
 ```ts
 const getNumberOrFallback = (num?: number): number => {
-    if (num) {
-        return num;
-    } else {
-        return 5;
-    }
-}
+	if (num) {
+		return num;
+	} else {
+		return 5;
+	}
+};
 ```
 
 However, passing `0` to this function results in the fallback `5`, because JavaScript implicitly converts `0` to `false`.
@@ -336,12 +336,12 @@ It may be preferable to be explicit in type guards.
 
 ```ts
 const getNumberOrFallback = (num?: number): number => {
-    if (num !== undefined) {
-        return num;
-    } else {
-        return 5;
-    }
-}
+	if (num !== undefined) {
+		return num;
+	} else {
+		return 5;
+	}
+};
 ```
 
 Calling this function with `0` will result in `0` being returned.
@@ -354,12 +354,12 @@ In some situations it may be useful to check whether a value is an instance of a
 
 ```ts
 const dateString = (date: string | Date): string => {
-    if (date instanceof Date) {
-        return date.toUTCString();
-    }
+	if (date instanceof Date) {
+		return date.toUTCString();
+	}
 
-    return date;
-}
+	return date;
+};
 ```
 
 The `if` condition uses `instanceof` to check that `date` is an instance of the `Date` class. Then, inside the `if` statement, it's possible to access the `toUTCString` method that's available on instances of that class.
@@ -406,12 +406,12 @@ A common way to represent data with multiple fields in JavaScript is with an obj
 
 ```ts
 type Element = {
-    kind: 'Text' | 'Image';
-    copy: string;
-    width: number;
-    height: number;
-    url: string;
-}
+	kind: 'Text' | 'Image';
+	copy: string;
+	width: number;
+	height: number;
+	url: string;
+};
 ```
 
 There's a problem with this type, however, because when the element is an Image it won't have data to populate the `copy` field, and when it's Text it won't have data to populate `width`, `height` or `url`.
@@ -424,12 +424,12 @@ One way to deal with data that might not be present is to mark its field as opti
 
 ```ts
 type Element = {
-    kind: 'Text' | 'Image';
-    copy?: string;
-    width?: number;
-    height?: number;
-    url?: string;
-}
+	kind: 'Text' | 'Image';
+	copy?: string;
+	width?: number;
+	height?: number;
+	url?: string;
+};
 ```
 
 ---
@@ -440,7 +440,7 @@ Having defined a type for `Element`, it should be possible to start using it in 
 
 ```ts
 const logElement = (element: Element): void =>
-    console.log(`Image with aspect ratio: ${element.width / element.height}`)
+	console.log(`Image with aspect ratio: ${element.width / element.height}`);
 ```
 
 However, this results in two errors.
@@ -461,10 +461,10 @@ Only images have a `width` and `height`, so it would be useful to be able to nar
 
 ```ts
 const logElement = (element: Element): void => {
-    if (element.kind === 'Image') {
-        console.log(`Image with aspect ratio: ${element.width / element.height}`);
-    }
-}
+	if (element.kind === 'Image') {
+		console.log(`Image with aspect ratio: ${element.width / element.height}`);
+	}
+};
 ```
 
 Unfortunately this doesn't work and the errors still appear. The compiler has no way to know the `width` and `height` fields will always be there for image because the type doesn't say that: it says they may be missing at all times, even when `kind` is `'Image'`.
@@ -477,16 +477,16 @@ It is possible to check fields are present before using them. However, for objec
 
 ```ts
 type Text = {
-    kind: 'Text';
-    copy: string;
-}
+	kind: 'Text';
+	copy: string;
+};
 
 type Image = {
-    kind: 'Image';
-    width: number;
-    height: number;
-    url: string;
-}
+	kind: 'Image';
+	width: number;
+	height: number;
+	url: string;
+};
 
 type Element = Text | Image;
 ```
@@ -497,16 +497,16 @@ type Element = Text | Image;
 
 ## Using Discriminated Unions
 
-The key feature of discriminated unions is that they share a common field, called a *discriminant*, that can be checked to narrow the type. In this example this field is called `kind`.
+The key feature of discriminated unions is that they share a common field, called a _discriminant_, that can be checked to narrow the type. In this example this field is called `kind`.
 
 ```ts
 const logElement = (element: Element): void => {
-    if (element.kind === 'Image') {
-        console.log(`Image with aspect ratio: ${element.width / element.height}`);
-    } else {
-        console.log(`Text with ${element.copy.split(' ').length} words`);
-    }
-}
+	if (element.kind === 'Image') {
+		console.log(`Image with aspect ratio: ${element.width / element.height}`);
+	} else {
+		console.log(`Text with ${element.copy.split(' ').length} words`);
+	}
+};
 ```
 
 When `kind` is `'Image'` TypeScript knows that it can narrow the type of `Element` to an `Image` and allow access to the `width` and `height` fields. When `kind` is `'Text'` TypeScript knows that it can narrow the type of `Element` to `Text` and allow access to the `copy` field.

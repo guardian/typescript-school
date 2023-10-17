@@ -1,63 +1,60 @@
 <!doctype html>
 <html lang="en-GB">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title><!-- TITLE --></title>
+		<style>
+			body {
+				padding: 0;
+				margin: 0;
+				font-size: 36px;
+				font-family: system-ui, sans-serif;
+				color: #24292e;
+			}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><!-- TITLE --></title>
-    <style>
-        body {
-            padding: 0;
-            margin: 0;
-            font-size: 36px;
-            font-family: system-ui, sans-serif;
-            color: #24292e;
-        }
+			html {
+				scroll-snap-type: y mandatory;
+			}
 
-        html {
-            scroll-snap-type: y mandatory;
-        }
+			main {
+				display: flex;
+				flex-direction: column;
+			}
 
-        main {
-            display: flex;
-            flex-direction: column;
-        }
+			article {
+				box-sizing: border-box;
+				position: relative;
+				min-height: 100dvh;
+				width: 100dvw;
+				scroll-snap-align: start;
+				padding: 2rem;
+			}
 
-        article {
-            box-sizing: border-box;
-            position: relative;
-            min-height: 100dvh;
-            width: 100dvw;
-            scroll-snap-align: start;
-            padding: 2rem;
-        }
+			article aside {
+				opacity: 0.6;
+				position: absolute;
+				bottom: 1rem;
+				right: 1rem;
+			}
 
-        article aside {
-            opacity: 0.6;
-            position: absolute;
-            bottom: 1rem;
-            right: 1rem;
-        }
+			pre {
+				padding: 0.5em;
+				border: 2px solid #eee;
+				overflow: scroll;
+			}
 
-        pre {
-            padding: 0.5em;
-            border: 2px solid #eee;
-            overflow: scroll;
-        }
+			:is(h1, h2, h3, p) > code {
+				padding: 0;
+				color: #6f42c1;
+			}
+		</style>
+		<!-- STYLES -->
+	</head>
 
-
-        :is(h1, h2, h3, p)>code {
-            padding: 0;
-            color: #6f42c1;
-        }
-    </style>
-    <!-- STYLES -->
-</head>
-
-<body>
-    <main>
-        <!-- MAIN -->
-    </main>
-</body>
-
+	<body>
+		<main>
+			<!-- MAIN -->
+		</main>
+	</body>
 </html>

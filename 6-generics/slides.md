@@ -107,10 +107,10 @@ Sometimes you get type errors because TypeScript can't correctly figure out what
 
 ## Comparison With The `any` Type
 
-It's important to note that a generic type is *not* the same as the `any` type. It refers to a specific type passed in via a type parameter. Doing something like this will result in a type error:
+It's important to note that a generic type is _not_ the same as the `any` type. It refers to a specific type passed in via a type parameter. Doing something like this will result in a type error:
 
 ```ts
-const identity = <A>(a: A): A => "opinion";
+const identity = <A>(a: A): A => 'opinion';
 ```
 
 ```
@@ -140,7 +140,7 @@ Also, given that the array type is built into TypeScript itself, it might be dif
 
 ## The (Generic) Array Type
 
-TypeScript's solution is to use a *generic* Array type. It's defined once and has a generic type parameter.
+TypeScript's solution is to use a _generic_ Array type. It's defined once and has a generic type parameter.
 
 ```ts
 const numbers: Array<number> = [1, 2, 3];
@@ -154,8 +154,8 @@ If you were writing the `Array` type yourself, it might look something like this
 
 ```ts
 type Array<Element> = {
-    length: number;
-}
+	length: number;
+};
 ```
 
 Generic types are similar to generic functions in that they take a set of type parameters inside a pair of angle brackets (`<>`).
@@ -168,9 +168,9 @@ As with functions, the type parameter can be used elsewhere in the type definiti
 
 ```ts
 type Array<Element> = {
-    length: number;
-    includes(element: Element): boolean;
-}
+	length: number;
+	includes(element: Element): boolean;
+};
 ```
 
 The `includes` methods checks whether an array contains a given element. The type definition ensures that you can't call this method with a value that isn't of the same type as the elements in the array.
@@ -183,13 +183,13 @@ Classes can also be generic. An alternative implementation of `Array` using a cl
 
 ```ts
 class Array<Element> {
-    length: number = 0;
-    includes(element: Element): boolean {
-        // Implementation for `includes`.
-    }
-    constructor(/* Constructor arguments */) {
-        // Constructor implementation
-    }
+	length: number = 0;
+	includes(element: Element): boolean {
+		// Implementation for `includes`.
+	}
+	constructor(/* Constructor arguments */) {
+		// Constructor implementation
+	}
 }
 ```
 
@@ -203,7 +203,7 @@ Let's assume you don't know what the implementation of this function is, you onl
 const identity = <A>(a: A): A => ???;
 ```
 
-There is *only one* possible implementation of this function (excluding side effects), and that is to return `a`. It's not possible to call `.length` because `A` might not be an array type. It's not possible to add anything with `+` because `A` might not be a `number` or a `string` type.
+There is _only one_ possible implementation of this function (excluding side effects), and that is to return `a`. It's not possible to call `.length` because `A` might not be an array type. It's not possible to add anything with `+` because `A` might not be a `number` or a `string` type.
 
 ---
 
@@ -249,8 +249,8 @@ To solve this problem, TypeScript allows types to be **constrained** to have cer
 
 ```ts
 type HasLength = {
-    length: number;
-}
+	length: number;
+};
 
 const getLength = <A extends HasLength>(a: A): number => a.length;
 ```
