@@ -8,15 +8,19 @@ const fields = zod.object({
 });
 
 export type PillarId = zod.output<typeof pillarId>;
-const pillarId = zod.enum([
-	'pillar/news',
-	'pillar/opinion',
-	'pillar/sport',
-	'pillar/lifestyle',
-	'pillar/arts',
-	// @TODO: the pillar can be `undefined` for Labs
-	// Search for “Guardian”
-]);
+const pillarId = zod
+	.enum([
+		'pillar/news',
+		'pillar/opinion',
+		'pillar/sport',
+		'pillar/lifestyle',
+		'pillar/arts',
+		// @TODO: the pillar can be `undefined` for Labs
+		// Search for “Guardian”
+		'other/labs',
+	])
+	.optional()
+	.default('other/labs');
 
 /** **Concepts**: Generics */
 export type Result = zod.output<typeof result>;

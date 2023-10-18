@@ -1,5 +1,5 @@
 import { palette } from '@guardian/source-foundations';
-import { PillarId } from './capi';
+import { PillarId } from './capi.ts';
 /**
  * **Concepts**: Generics
  *
@@ -21,7 +21,7 @@ type PaletteColour<T extends keyof typeof palette> =
  */
 type Pillar = Extract<
 	keyof typeof palette,
-	'news' | 'opinion' | 'sport' | 'culture' | 'lifestyle'
+	'news' | 'opinion' | 'sport' | 'culture' | 'lifestyle' | 'labs'
 	// @TODO we need to account for 'labs'
 >;
 
@@ -53,6 +53,12 @@ const styles = {
 	lifestyle: {
 		border: palette.lifestyle[400],
 		headline: palette.lifestyle[300],
+		text: palette.neutral[10],
+		background: palette.neutral[97],
+	},
+	labs: {
+		border: palette.labs[400],
+		headline: palette.labs[300],
 		text: palette.neutral[10],
 		background: palette.neutral[97],
 	},
@@ -97,4 +103,5 @@ export const pillarMappings = {
 	'pillar/sport': 'sport',
 	'pillar/lifestyle': 'lifestyle',
 	'pillar/arts': 'culture',
+	'other/labs': 'labs',
 } as const satisfies Record<PillarId, Pillar>;
