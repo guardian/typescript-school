@@ -22,14 +22,8 @@ type PaletteColour<T extends keyof typeof palette> =
 type Pillar = Extract<
 	keyof typeof palette,
 	'news' | 'opinion' | 'sport' | 'culture' | 'lifestyle'
+	// @TODO we need to account for 'labs'
 >;
-
-/**
- * **Concepts**: Narrowing
- *
- * Colour palettes for the five pillars, plus the neutral set
- */
-type PillarColour = PaletteColour<Pillar> | PaletteColour<'neutral'>;
 
 const styles = {
 	news: {
@@ -65,10 +59,12 @@ const styles = {
 	// as const satisfies allows to have the actual value of the object,
 	// but ensure that it still matches a specific shape
 	// https://www.typescriptlang.org/docs/handbook/release-notes/typescript-4-9.html#the-satisfies-operator
-} as const satisfies Record<
-	Pillar,
-	Record<'border' | 'headline' | 'text' | 'background', PillarColour>
->;
+} as const satisfies {
+	[Key in Pillar]: Record<
+		'border' | 'headline' | 'text' | 'background',
+		PaletteColour<Key> | PaletteColour<'neutral'>
+	>;
+};
 
 /**
  * **Concepts**: Functions
