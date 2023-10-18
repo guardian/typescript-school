@@ -123,18 +123,62 @@ Type guards are functions that help narrow down the type of a value within a con
 ```ts
 if (typeof value === 'string') { /* value is a string here */ }.
 ```
-
+This will be delved deeper in session 4 however.
 --- 
 
 ## Advanced Primitives:
 
 TypeScript also supports other advanced primitive types like bigint for arbitrary-precision integers, void for functions that don't return a value, and never for functions that never return (e.g., throw errors).
 
+#### BigInt
+BigInt is used to represent arbitrarily large integers. It's useful when you need to work with integers larger than the maximum safe integer value in JavaScript, which is Number.MAX_SAFE_INTEGER.
+
+```ts
+let bigNumber: bigint = 1234567890123456789012345678901234567890n;
+```
+
+#### Void:
+The void type is typically used for functions that do not return a value or return undefined. This is often the case for functions with side effects but no meaningful return value.
+
+```ts
+function logMessage(message: string): void {
+  console.log(message);
+}
+```
+
+In this example, the throwError function never returns a value because it always throws an error, preventing the program from continuing.
+
+#### Never:
+The never type represents values that never occur. It is often used for functions that always throw an error or never reach the end.
+
 ---
 
 ### Type Inference with Functions:
 
 TypeScript infers the return type of functions based on their implementation. Explicitly annotating return types is often not required.
+
+TypeScript infers the return type of this function
+
+```ts
+function add(a: number, b: number) {
+  return a + b;
+}
+```
+
+
+The return type of the function 'add' is inferred as 'number'
+
+```ts
+const result = add(5, 3); // result is of type 'number'
+```
+
+In the example above:
+
+The add function takes two parameters, a and b, both of type number.
+
+TypeScript uses type inference to determine that the return type of the add function is number because it's clear that the function returns the sum of two numbers.
+
+When we call add(5, 3), TypeScript knows that the result will be a number because the add function returns a number, and it infers the type for the result variable accordingly.
 
 ---
 
