@@ -91,10 +91,29 @@ let myColor: Color = Color.Red;
 
 Sometimes, you may need to tell TypeScript that you know more about a value's type than it does. You can use type assertions for this purpose. For example, 
 
+// @ts-expect-error
 ```ts
 (someValue as string).toUpperCase().
 ```
+<!-- Reader notes
+Pleae Note:   we want to recommend doing this sparingly, and only when there are no clear alternatives.
+Using type assertion to tell the TypeScript compiler that you are certain that someValue is of type string. This allows you to call the toUpperCase() method on it without a compilation error. However, there are potential dangers and issues associated with this approach:
+ -->
+ Lack of Type Safety: By using type assertions, you bypass TypeScript's static type checking, which is one of the main benefits of using TypeScript. It means that you lose the protection TypeScript provides in terms of type safety. If someValue is supposed to be a string but isn't, you won't get any warnings or errors at compile time.
 
+```ts
+function isString(value: any): value is string {
+  return typeof value === "string";
+}
+
+if (isString(someValue)) {
+  const upperCaseValue = someValue.toUpperCase();
+  } 
+  else {
+  // Handle the case where someValue is not a string
+  }
+```
+This way, you maintain type safety, have better runtime error handling, and make your code more resilient to changes.
 --- 
 
 ## Type Guards:
@@ -131,3 +150,5 @@ type Album = {
 const albumName: AlbumName = 'Kind of Blue';
 albumName;
 ```
+
+---
