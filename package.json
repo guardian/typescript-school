@@ -14,7 +14,6 @@
 		"week-4-narrowing-structural-typing": "echo \"Not implement week four yet\" && exit 1",
 		"week-5-generics": "echo \"Not implement week five yet\" && exit 1",
 		"week-n": "echo \"Not implement week N yet\" && exit 1",
-		"test": "jest"
 	},
 	"repository": {
 		"type": "git",
@@ -36,9 +35,7 @@
 		"@guardian/source-foundations": "13.0.0",
 		"@guardian/tsconfig": "0.2.0",
 		"@hono/node-server": "1.1.1",
-		"@types/jest": "^29.5.4",
 		"@types/node": "20.4.5",
-		"jest": "^29.7.0",
 		"prettier": "3.0.0",
 		"rehype-highlight": "6.0.0",
 		"rehype-stringify": "9.0.4",
