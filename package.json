@@ -13,7 +13,7 @@
 		"week-3-functions": "echo \"Not implement week three yet\" && exit 1",
 		"week-4-narrowing-structural-typing": "echo \"Not implement week four yet\" && exit 1",
 		"week-5-generics": "echo \"Not implement week five yet\" && exit 1",
-		"week-n": "echo \"Not implement week N yet\" && exit 1",
+		"week-n": "echo \"Not implement week N yet\" && exit 1"
 	},
 	"repository": {
 		"type": "git",
@@ -42,7 +42,6 @@
 		"remark-gfm": "3.0.1",
 		"remark-parse": "10.0.2",
 		"remark-rehype": "10.1.0",
-		"ts-jest": "^29.1.1",
 		"ts-node": "10.9.1",
 		"tslib": "2.6.1",
 		"typescript": "5.1.6",
