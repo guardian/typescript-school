@@ -25,14 +25,14 @@ function a(b, c) {
 	return b + c;
 }
 
-const e = (f, g) => {
-	return f + g;
+const d = (e, f) => {
+	return e + f;
 };
 
-const h = (i, j) => i + j;
+const g = (h, i) => h + i;
 
-const l = function (m, n) {
-	return m + n;
+const j = function (k, l) {
+	return k + l;
 };
 ```
 
@@ -93,15 +93,12 @@ You're most likely to encounter short hand and inline type annotations.
 The **shorthand** annotation assigns a "function type expression" to a type name.
 
 ```ts
-//                           3          4
-//                        ------     ------
+//                        ┌──3─┐     ┌──4─┐
 type StringLength = (str: string) => number;
-//   ------------   -----------------------
-//         1      =            2
+//   ──────1─────   ───────────2───────────
 
 const stringLength: StringLength = (str) => str.length;
-//                  ------------
-//                        5
+//                  ──────5─────
 ```
 
 1. type name
@@ -117,8 +114,7 @@ const stringLength: StringLength = (str) => str.length;
 ### Inline
 
 ```ts
-//                        1        2
-//                     ------   ------
+//                     ───1──   ───2──
 function greeter(name: string): string {
 	return `Hi, ${name}!`;
 }
@@ -134,12 +130,10 @@ function greeter(name: string): string {
 ### Call signatures
 
 ```ts
-//       1
-//   --------
+//   ────1───
 type LengthFn = {
 	(str: string): number;
-//        ------   ------
-//           2        3
+//        ───2──   ───3──
 };
 ```
 
@@ -177,7 +171,7 @@ type LengthFn = {
 const add2 = (n1: number, n2: number): number => n1 + n2;
 ```
 
-**Question:** what happens if we call `a` like this?
+**Question:** what happens if we call `add2` like this?
 
 ```ts
 add2('one', 'two');
@@ -213,7 +207,7 @@ add2(1);
 // Declare an optional parameter by
 // appending a "?" to the parameter name
 const log = (message: string, prefix?: string): string => (
-// ---------------------------------^
+// ─────────────────────────────────^
 	prefix ? `${prefix}: ${message}`
 		: message
 )
@@ -352,7 +346,7 @@ The type can define more properties than we choose to extract. We don't have to 
 
 We see this pattern a lot in React components.
 
-```ts
+```tsx
 type Props = {
 	captionText: string;
 	padCaption?: boolean;
