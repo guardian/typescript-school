@@ -174,13 +174,13 @@ type LengthFn = {
 **Required parameters**
 
 ```ts
-const a = (b: number, c: number): number => b + c;
+const add2 = (n1: number, n2: number): number => n1 + n2;
 ```
 
 **Question:** what happens if we call `a` like this?
 
 ```ts
-a('one', 'two');
+add2('one', 'two');
 ```
 
 ---
@@ -230,9 +230,10 @@ log("Success!", undefined);
 In this example, is `prefix` an optional parameter?
 
 ```ts
-function log(message: string, prefix: string | undefined): void {
-	console.log(`${prefix ? `${prefix}: ` : ``}${message}`)
-}
+const log = (message: string, prefix: string | undefined): string => (
+	prefix ? `${prefix}: ${message}`
+		: message
+)
 ```
 
 ---
@@ -243,9 +244,10 @@ Not quite! TypeScript will let us pass `undefined` as a value for `prefix`, but 
 
 
 ```ts
-function log(message: string, prefix: string | undefined): void {
-	console.log(`${prefix ? `${prefix}: ` : ``}${message}`)
-}
+const log = (message: string, prefix: string | undefined): string => (
+	prefix ? `${prefix}: ${message}`
+		: message
+)
 
 // ❌ Expected 2 arguments, but got 1
 log("Success!");
@@ -417,11 +419,3 @@ function makeDate(strOrDay: string | number, month?: number, year?: number): Dat
     }
 }
 ```
-
----
-
-## Further Topics to Explore
-
-- `this`
-- `call`, `apply` and `bind`
-- Generators
