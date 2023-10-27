@@ -52,9 +52,10 @@ allows you to use `Age` instead of number for clarity.
 #### with Unions
 
 ```ts
-type Currency = "USD" | "EUR" | "GBP"; // Type alias for a currency
+type Currency = 'USD' | 'EUR' | 'GBP'; // Type alias for a currency
 type Price = number | string; // Union type for price, which can be a number or a formatted string
 ```
+
 ---
 
 ## Union Types
@@ -85,8 +86,11 @@ const something: 'x' | 'y' = 'y';
 - These types are often used in scenarios where values might be missing or not assigned.
 
 ---
+
 ## Understanding null and undefined Types
+
 ### The null Type
+
 - null represents the intentional absence of any value.
 - It is often used to indicate that a variable is deliberately empty or has no assigned value.
 - For example, when a user hasn't selected an option, a variable can be set to null.
@@ -96,12 +100,14 @@ const something: 'x' | 'y' = 'y';
 let selectedOption: string | null = null;
 
 if (userHasMadeSelection) {
-  selectedOption = userSelection;
+	selectedOption = userSelection;
 }
 ```
 
 ---
+
 ## Understanding null and undefined Types
+
 ### The undefined Type
 
 - `undefined`` represents a variable that has been declared but hasn't been assigned a value.
@@ -113,7 +119,7 @@ if (userHasMadeSelection) {
 let uninitializedVariable: string | undefined;
 
 if (conditionIsMet) {
-  uninitializedVariable = "Initialized value";
+	uninitializedVariable = 'Initialized value';
 }
 ```
 
@@ -127,6 +133,7 @@ They can be explicitly assigned to indicate the absence of data or uninitialized
 ## Bringing these together
 
 - see `week2-examples.ts`
+
 ---
 
 ## Type Guards
@@ -195,7 +202,6 @@ function throwError(message: string): never {
 
 In this scenario, never conveys the intention that the function never completes normally, as it always throws an error, preventing the program from continuing.
 
-
 ---
 
 ### Type Inference with Functions
@@ -229,53 +235,59 @@ TypeScript uses type inference to determine that the return type of the add func
 Object types in TypeScript are a fundamental concept that allows you to define the shape and structure of objects. They play a vital role in making your code more predictable and safe.
 
 ### Object Type Basics
+
 An object type is essentially a blueprint for an object. It specifies the properties an object should have, along with their respective types. For example, you can define an object type representing a person:
 
 ```ts
 type Person = {
-  name: string;
-  age: number;
+	name: string;
+	age: number;
 };
 ```
 
 In this example, the Person object type defines that a person object must have a name property of type string and an age property of type number.
 
---- 
+---
 
 ### Using Object Types
+
 You can use object types in various ways:
 
 #### Defining Object Variables:
 
 ```ts
-const user: Person = { name: "Alice", age: 30 };
+const user: Person = { name: 'Alice', age: 30 };
 ```
 
 ---
 
 ### Using Object Types
+
 #### Function Parameters:
 
 ```ts
 function greet(person: Person) {
-  console.log(`Hello, ${person.name}!`);
+	console.log(`Hello, ${person.name}!`);
 }
 ```
 
---- 
+---
 
 ### Using Object Types
+
 #### Object Arrays:
 
 ```ts
 const people: Person[] = [
-  { name: "Bob", age: 25 },
-  { name: "Charlie", age: 35 },
+	{ name: 'Bob', age: 25 },
+	{ name: 'Charlie', age: 35 },
 ];
 ```
---- 
+
+---
 
 ### Using Object Types
+
 #### Object Type Unions:
 
 ```ts
@@ -288,28 +300,34 @@ type Organism = Animal | Plant;
 ---
 
 ### Using Object Types
-####  Optional and Readonly Properties:
+
+#### Optional and Readonly Properties:
+
 Object types can also define optional and readonly properties. Optional properties are marked with a ?, and readonly properties are marked with readonly. For example:
 
 ```ts
 type Book = {
-  title: string;
-  author: string;
-  year?: number; // Optional property
-  readonly ISBN: string; // Readonly property
+	title: string;
+	author: string;
+	year?: number; // Optional property
+	readonly ISBN: string; // Readonly property
 };
 ```
+
 ---
 
 ### Using Object Types
+
 #### Index Signatures
+
 Object types can also include index signatures to define properties by a specific pattern. For instance, you can create an object type for a dictionary:
 
 ```ts
 type Dictionary = {
-  [key: string]: string;
+	[key: string]: string;
 };
 ```
+
 ---
 
 #### Intersection Types
@@ -318,37 +336,40 @@ You can combine multiple object types into a single type using intersection type
 
 ```ts
 type Car = {
-  brand: string;
-  year: number;
+	brand: string;
+	year: number;
 };
 
 type Electric = {
-  electric: boolean;
+	electric: boolean;
 };
 
 type ElectricCar = Car & Electric;
 ```
 
---- 
+---
 
 ### Exploring the Record Type in TypeScript
+
 Have you ever needed to create structured data with specific key-value pairs in TypeScript? That's where the Record type comes into play. It's a versatile tool that helps you define objects with known shapes.
 
 #### What is the Record Type?
+
 Think of the Record type as your blueprint for creating structured data. It's like a custom-made map with predefined keys and corresponding value types.
 
---- 
+---
 
 #### Creating a Simple Record
+
 Here's how you create a basic record:
 
 ```ts
-type FruitRecord = Record<"apple" | "banana" | "cherry", number>;
+type FruitRecord = Record<'apple' | 'banana' | 'cherry', number>;
 
 const fruitCount: FruitRecord = {
-  apple: 5,
-  banana: 8,
-  cherry: 12,
+	apple: 5,
+	banana: 8,
+	cherry: 12,
 };
 
 // You can access individual counts like this:
@@ -366,22 +387,23 @@ Records are particularly handy when you need to:
 - Ensure consistent data shapes across your application.
 - Define expected properties for specific data structures.
 
---- 
+---
 
 ### Combining Object Types and Records
+
 You can combine object types and records to build complex data structures. For instance:
 
 ```ts
 type Employee = {
-  name: string;
-  position: string;
+	name: string;
+	position: string;
 };
 
 type EmployeeRecord = Record<number, Employee>;
 
 const employees: EmployeeRecord = {
-  101: { name: "Alice", position: "Developer" },
-  102: { name: "Bob", position: "Designer" },
+	101: { name: 'Alice', position: 'Developer' },
+	102: { name: 'Bob', position: 'Designer' },
 };
 
 // You can access employees by their IDs:
@@ -403,21 +425,36 @@ const employee101 = employees[101];
 ### Task: Managing Newspaper Articles
 
 ```ts
-type ArticleRecord = Record<string, { title: string; author: string; publicationDate: string }>;
+type ArticleRecord = Record<
+	string,
+	{ title: string; author: string; publicationDate: string }
+>;
 
 const articles: ArticleRecord = {
-  "article1": { title: "Breaking News: New Discoveries in TypeScript", author: "Alice Author", publicationDate: "2023-10-19" },
-  "article2": { title: "TypeScript and Modern Web Development", author: "Bob Writer", publicationDate: "2023-10-20" },
-  // Add more articles here
+	article1: {
+		title: 'Breaking News: New Discoveries in TypeScript',
+		author: 'Alice Author',
+		publicationDate: '2023-10-19',
+	},
+	article2: {
+		title: 'TypeScript and Modern Web Development',
+		author: 'Bob Writer',
+		publicationDate: '2023-10-20',
+	},
+	// Add more articles here
 };
 ```
+
 - Add at least three additional articles to the articles object. Each article should have a unique ID (string), title, author, and publication date.
 
 - Implement a function called addArticle that takes parameters for the article ID and article information and adds the article to the articles object.
 
 ```ts
-function addArticle(articleId: string, articleInfo: { title: string; author: string; publicationDate: string }) {
-  // Implement the function to add the article to the articles object
+function addArticle(
+	articleId: string,
+	articleInfo: { title: string; author: string; publicationDate: string },
+) {
+	// Implement the function to add the article to the articles object
 }
 ```
 
@@ -425,9 +462,10 @@ function addArticle(articleId: string, articleInfo: { title: string; author: str
 
 ```ts
 function deleteArticle(articleId: string) {
-  // Implement the function to delete the article from the articles object
+	// Implement the function to delete the article from the articles object
 }
 ```
+
 - After adding and implementing the functions, use console.log to display the entire articles object in the console.
 
 - Test the addArticle and deleteArticle functions by adding and removing at least one article, and then display the updated articles object in the console.
