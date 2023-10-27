@@ -63,7 +63,6 @@ function a(b, c) {
 	return b + c;
 }
 
-
 a(1, 2);
 a('hello', 'goodbye');
 1 + a('2', 3);
@@ -133,7 +132,7 @@ function greeter(name: string): string {
 //   ────1───
 type LengthFn = {
 	(str: string): number;
-//        ───2──   ───3──
+	//    ───2──   ───3──
 };
 ```
 
@@ -151,17 +150,16 @@ type StringLength = (str: string) => number;
 
 // ----- Inline ----- //
 function greeter(name: string): string {
-  return `Hi, ${name}!`;
+	return `Hi, ${name}!`;
 }
 
 // ----- Call signature ----- //
 type LengthFn = {
-  (str: string): number;
+	(str: string): number;
 };
 ```
 
 ---
-
 
 ## Parameter Types
 
@@ -206,15 +204,13 @@ add2(1);
 ```ts
 // Declare an optional parameter by
 // appending a "?" to the parameter name
-const log = (message: string, prefix?: string): string => (
-// ─────────────────────────────────^
-	prefix ? `${prefix}: ${message}`
-		: message
-)
+const log = (message: string, prefix?: string): string =>
+	// ─────────────────────────────^
+	prefix ? `${prefix}: ${message}` : message;
 
 // These calls are equivalent
-log("Success!");
-log("Success!", undefined);
+log('Success!');
+log('Success!', undefined);
 ```
 
 ---
@@ -224,10 +220,8 @@ log("Success!", undefined);
 In this example, is `prefix` an optional parameter?
 
 ```ts
-const log = (message: string, prefix: string | undefined): string => (
-	prefix ? `${prefix}: ${message}`
-		: message
-)
+const log = (message: string, prefix: string | undefined): string =>
+	prefix ? `${prefix}: ${message}` : message;
 ```
 
 ---
@@ -236,18 +230,15 @@ const log = (message: string, prefix: string | undefined): string => (
 
 Not quite! TypeScript will let us pass `undefined` as a value for `prefix`, but we can't omit a value:
 
-
 ```ts
-const log = (message: string, prefix: string | undefined): string => (
-	prefix ? `${prefix}: ${message}`
-		: message
-)
+const log = (message: string, prefix: string | undefined): string =>
+	prefix ? `${prefix}: ${message}` : message;
 
 // ❌ Expected 2 arguments, but got 1
-log("Success!");
+log('Success!');
 
 // ✅
-log("Success!", undefined);
+log('Success!', undefined);
 ```
 
 ---
@@ -262,7 +253,7 @@ It's a contract for both the function body and where we call that function from 
 // We get an error because the return value
 // does not match the return type.
 // Type 'string' is not assignable to type 'number'
-const add = (a: number, b: number): number => "hello";
+const add = (a: number, b: number): number => 'hello';
 //                                  ------
 //                               return type
 
@@ -318,7 +309,7 @@ In some cases, TypeScript can infer a parameter's type. For example:
 ```
 
 1. TypeScript infers that `item` is type `number` because of the starting array.
-This isn't magic! It uses Generics, which we will cover in session 6.
+   This isn't magic! It uses Generics, which we will cover in session 6.
 
 ---
 
@@ -334,7 +325,7 @@ const sum = (n: number, ...m: number[]): number => // ...
 ```
 
 Rest parameters are always array types, as they can have 0 or more elements.
-If you do not provide a value for the rest parameter when calling the function, 
+If you do not provide a value for the rest parameter when calling the function,
 its type will be an empty array, **not** `undefined`.
 
 ---
@@ -367,13 +358,11 @@ We can use TypeScript to specify that a value should be a function with a specif
 ```ts
 type NumberOp = (num1: number, num2: number) => number;
 const add: NumberOp = (num1: number, num2: number): number => {
-  return num1 + num2
-}
+	return num1 + num2;
+};
 
-function doOperation(operation: NumberOp,
-  num1: number,
-  num2: number): number {
-  return operation(num1, num2);
+function doOperation(operation: NumberOp, num1: number, num2: number): number {
+	return operation(num1, num2);
 }
 doOperation(add, 3, 2);
 ```
@@ -395,7 +384,7 @@ We can write multiple function signatures and _one_ implementation signature.
 
 The implementation signature must handle all variants of the call signatures.
 
---- 
+---
 
 ## Function Overloading
 
@@ -405,11 +394,15 @@ function makeDate(dateStr: string): Date;
 // Call signature 2
 function makeDate(day: number, month: number, year: number): Date;
 // Implementation signature & implementation
-function makeDate(strOrDay: string | number, month?: number, year?: number): Date {
-    if (typeof strOrDay === 'string') {
-        // Call signature 1
-    } else {
-        // Call signature 2
-    }
+function makeDate(
+	strOrDay: string | number,
+	month?: number,
+	year?: number,
+): Date {
+	if (typeof strOrDay === 'string') {
+		// Call signature 1
+	} else {
+		// Call signature 2
+	}
 }
 ```
