@@ -1,11 +1,13 @@
 import { readFile, readdir } from 'node:fs/promises';
 import { RequestListener, createServer } from 'node:http';
-import { unified } from 'unified';
+import { type Plugin, unified } from 'unified';
 import remarkParse from 'remark-parse';
 import remarkRehype from 'remark-rehype';
 import rehypeStringify from 'rehype-stringify';
 import remarkGfm from 'remark-gfm';
 import rehypeHighlight from 'rehype-highlight';
+import type { Nodes, Root } from 'mdast';
+import { zone } from 'mdast-zone';
 
 const host = 'localhost';
 const port = 8000;
@@ -20,9 +22,13 @@ const session = async (id: string) => {
 	}
 };
 
+const omitFromSlides: Plugin<[], Root> = () => (tree: Nodes) =>
+	zone(tree, 'omit-from-slides', (start, _nodes, end) => [start, end]);
+
 const processor = unified()
 	.use(remarkParse)
 	.use(remarkGfm)
+	.use(omitFromSlides)
 	.use(remarkRehype)
 	.use(rehypeHighlight)
 	.use(rehypeStringify);
