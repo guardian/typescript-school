@@ -246,6 +246,7 @@ log('Success!', undefined);
 ## Return Types
 
 The return type tells us what values a function can return.
+
 It's a contract for both the function body and where we call that function from (the call site).
 
 ```ts
@@ -324,6 +325,7 @@ const sum = (n: number, ...m: number[]): number => // ...
 ```
 
 Rest parameters are always array types, as they can have 0 or more elements.
+
 If you do not provide a value for the rest parameter when calling the function,
 its type will be an empty array, **not** `undefined`.
 
@@ -332,6 +334,7 @@ its type will be an empty array, **not** `undefined`.
 ## Parameter Destructuring
 
 Using parameter destructuring, we can extract properties from an object passed as an argument into local variables.
+
 The type can define more properties than we choose to extract. We don't have to extract every property.
 
 We see this pattern a lot in React components.
@@ -345,7 +348,10 @@ type Props = {
 };
 
 // A React component
-function Caption({ captionText, credit, displayCredit }: Props) => (<></>)
+function Caption(
+		{ captionText, credit, displayCredit }: Props) => {
+	return <></>
+}
 ```
 
 ---
@@ -353,6 +359,7 @@ function Caption({ captionText, credit, displayCredit }: Props) => (<></>)
 ### Parameter Destructuring
 
 Similar to destructuring object parameters, we can also destructure array parameters.
+
 This means we can extract just the values we want from the array:
 
 ```ts
@@ -393,6 +400,7 @@ makeDate("2023-05-20");
 ```
 
 We write multiple call signatures for a function using function overloading.
+
 We can write multiple function signatures and _one_ implementation signature.
 
 The implementation signature must handle all variants of the call signatures.
@@ -420,7 +428,7 @@ function makeDate(
 }
 ```
 
---- 
+---
 
 ## Function Overloading
 
@@ -428,5 +436,7 @@ JavaScript doesn't actually support function overloading.
 If you define a function multiple times (`function name() {}`), the last definition "wins".
 
 TypeScript's function overloading is just syntactic sugar over the JavaScript constructs.
+
 The result is behaviour that _looks_ like overloading.
+
 The reality is it can require a complex function signature and body to handle the different inputs.
