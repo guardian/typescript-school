@@ -254,8 +254,7 @@ It's a contract for both the function body and where we call that function from 
 // does not match the return type.
 // Type 'string' is not assignable to type 'number'
 const add = (a: number, b: number): number => 'hello';
-//                                  ------
-//                               return type
+//                      return type ------
 
 // ----- Example 2 ----- //
 // ✅
@@ -371,15 +370,14 @@ doOperation(add, 3, 2);
 
 ## Function Overloading
 
-Sometimes we want to write a function that can be called in different ways.
+Sometimes we want to call a function in different ways:
 
 ```ts
 makeDate(2023, 05, 20);
 makeDate("2023-05-20");
 ```
 
-Function overloading allows us to define a multiple call signatures for a function.
-
+We write multiple call signatures for a function using function overloading.
 We can write multiple function signatures and _one_ implementation signature.
 
 The implementation signature must handle all variants of the call signatures.
@@ -406,3 +404,14 @@ function makeDate(
 	}
 }
 ```
+
+--- 
+
+## Function Overloading
+
+JavaScript doesn't actually support function overloading.
+If you define a function multiple times (`function name() {}`), the last definition "wins".
+
+TypeScript's function overloading is just syntactic sugar over the JavaScript constructs.
+The result is behaviour that _looks_ like overloading.
+The reality is it can require a complex function signature and body to handle the different inputs.
