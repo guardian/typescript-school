@@ -350,6 +350,21 @@ function Caption({ captionText, credit, displayCredit }: Props) => (<></>)
 
 ---
 
+### Parameter Destructuring
+
+Similar to destructuring object parameters, we can also destructure array parameters.
+This means we can extract just the values we want from the array:
+
+```ts
+function head([head]: number[]) {
+	return head;
+}
+
+head([1, 2, 3]); // returns 1
+```
+
+---
+
 ## Functions as Values
 
 We can use TypeScript to specify that a value should be a function with a specified signature. This is useful for callbacks:
