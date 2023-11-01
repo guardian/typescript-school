@@ -5,10 +5,10 @@
 	"private": true,
 	"scripts": {
 		"lint": "npm run lint:package && npm run lint:prettier",
-		"lint:prettier": "npx prettier . --write",
+		"lint:prettier": "prettier . --write",
 		"lint:package": "node ./node_modules/@guardian/package-linter/esm/cli.js ./package.json",
-		"start": "ts-node-esm server.ts",
-		"week-1-breaking-api-changes": "ts-node-esm 1-breaking-API-changes/server.ts",
+		"start": "tsx server.ts",
+		"week-1-breaking-api-changes": "tsx 1-breaking-API-changes/server.ts",
 		"week-2-primitives": "echo \"Not implement week two yet\" && exit 1",
 		"week-3-functions": "echo \"Not implement week three yet\" && exit 1",
 		"week-4-narrowing-structural-typing": "echo \"Not implement week four yet\" && exit 1",
@@ -22,7 +22,7 @@
 	"keywords": [
 		"typescript"
 	],
-	"author": "",
+	"author": "@guardian/typescript",
 	"license": "Apache-2.0",
 	"bugs": {
 		"url": "https://github.com/guardian/typescript-school/issues"
@@ -35,15 +35,17 @@
 		"@guardian/source-foundations": "13.0.0",
 		"@guardian/tsconfig": "0.2.0",
 		"@hono/node-server": "1.1.1",
+		"@types/mdast": "4.0.1",
 		"@types/node": "20.4.5",
+		"mdast-zone": "6.0.1",
 		"prettier": "3.0.3",
 		"rehype-highlight": "6.0.0",
 		"rehype-stringify": "9.0.4",
 		"remark-gfm": "3.0.1",
 		"remark-parse": "10.0.2",
 		"remark-rehype": "10.1.0",
-		"ts-node": "10.9.1",
 		"tslib": "2.6.1",
+		"tsx": "3.14.0",
 		"typescript": "5.1.6",
 		"unified": "10.1.2",
 		"zod": "3.21.4"
