@@ -10,7 +10,7 @@
 		"start": "tsx server.ts",
 		"week-1-breaking-api-changes": "tsx 1-breaking-API-changes/server.ts",
 		"week-2-primitives": "echo \"Not implement week two yet\" && exit 1",
-		"week-3-functions": "echo \"Not implement week three yet\" && exit 1",
+		"week-3-functions": "tsx 3-functions/functions.ts",
 		"week-4-narrowing-structural-typing": "echo \"Not implement week four yet\" && exit 1",
 		"week-5-generics": "echo \"Not implement week five yet\" && exit 1",
 		"week-n": "echo \"Not implement week N yet\" && exit 1"
