@@ -557,9 +557,8 @@ Having defined a type for `Element`, it should be possible to start using it in 
 <!--omit-from-slides end-->
 
 ```ts
-const logElement = (element: Element): void => console.log(
+const logElement = (element: Element): string =>
 	`Image with aspect ratio: ${element.width / element.height}`
-);
 ```
 
 <!--omit-from-slides start-->
@@ -583,12 +582,11 @@ Only images have a `width` and `height`, so it would be useful to be able to nar
 <!--omit-from-slides end-->
 
 ```ts
-const logElement = (element: Element): void => {
+const logElement = (element: Element): string => {
 	if (element.kind === 'Image') {
-		console.log(
+		return
 			`Image with aspect ratio:
 			${element.width / element.height}`
-		);
 	}
 };
 ```
@@ -636,16 +634,14 @@ In this example this field is called `kind`.
 <!--omit-from-slides end-->
 
 ```ts
-const logElement = (element: Element): void => {
+const logElement = (element: Element): string => {
 	if (element.kind === 'Image') {
-		console.log(
+		return
 			`Image with aspect ratio:
 			${element.width / element.height}`
-		);
 	} else {
-		console.log(
+		return
 			`Text with ${element.copy.split(' ').length} words`
-		);
 	}
 };
 ```
