@@ -26,6 +26,7 @@ The previous example only provided an identity function for `number`s. If you wa
 
 ```ts
 const identityNumber = (a: number): number => a;
+
 const identityString = (a: string): string => a;
 ```
 
@@ -39,9 +40,14 @@ There are a large number of types you may want to write identity functions for. 
 
 ```ts
 const identityNumber = (a: number): number => a;
+
 const identityString = (a: string): string => a;
-const identityArrayNumber = (a: Array<number>): Array<number> => a;
-const identityArrayString = (a: Array<string>): Array<string> => a;
+
+const identityArrayNumber =
+	(a: Array<number>): Array<number> => a;
+
+const identityArrayString =
+	(a: Array<string>): Array<string> => a;
 ```
 
 ---
@@ -54,11 +60,15 @@ This is where generics are useful. This example actually already demonstrates a 
 
 ```ts
 const identityNumber = (a: number): number => a;
+
 const identityString = (a: string): string => a;
-const identityArrayNumber = (a: Array<number>): Array<number> => a;
-//                              -------------   -------------
-const identityArrayString = (a: Array<string>): Array<string> => a;
-//                              -------------   -------------
+
+const identityArrayNumber =
+	(a: Array<number>): Array<number> => a;
+//    -------------   -------------
+const identityArrayString =
+	(a: Array<string>): Array<string> => a;
+//    -------------   -------------
 ```
 
 ---
@@ -99,7 +109,9 @@ When calling generic functions, you pass the value parameters between standard b
 
 ```ts
 const num: number = identity<number>(42);
+
 const string: string = identity<string>('news');
+
 const pillar: Pillar = identity<Pillar>(Culture);
 ```
 
@@ -113,7 +125,9 @@ In most cases TypeScript is able to infer the type parameters, so you can omit t
 
 ```ts
 const num: number = identity(42);
+
 const string: string = identity('news');
+
 const pillar: Pillar = identity(Culture);
 ```
 
@@ -135,7 +149,8 @@ const identity = <A>(a: A): A => 'opinion';
 
 ```
 Type 'string' is not assignable to type 'A'.
-  'A' could be instantiated with an arbitrary type which could be unrelated to 'string'
+  'A' could be instantiated with an arbitrary type
+  which could be unrelated to 'string'
 ```
 
 <!--omit-from-slides start-->
@@ -156,10 +171,13 @@ Arrays, for example, can have elements that could be lots of different types. It
 
 ```ts
 const numbers: NumberArray = [1, 2, 3];
+
 const strings: StringArray = ['news', 'opinion', 'culture'];
+
 const pillars: PillarArray = [News, Opinion, Culture];
 ```
 
+<!-- This comment exists to fix a parsing bug! If it's removed, the following doesn't get omitted! -->
 <!--omit-from-slides start-->
 Also, given that the array type is built into TypeScript itself, it might be difficult to create a version of the array type for custom types like `Pillar` above.
 <!--omit-from-slides end-->
@@ -174,7 +192,9 @@ TypeScript's solution is to use a _generic_ Array type. It's defined once and ha
 
 ```ts
 const numbers: Array<number> = [1, 2, 3];
+
 const strings: Array<string> = ['news', 'opinion', 'culture'];
+
 const pillars: Array<Pillar> = [News, Opinion, Culture];
 ```
 
@@ -205,12 +225,13 @@ As with functions, the type parameter can be used elsewhere in the type definiti
 ```ts
 type Array<Element> = {
 	length: number;
+
 	includes(element: Element): boolean;
 };
 ```
 
 <!--omit-from-slides start-->
-The `includes` methods checks whether an array contains a given element. The type definition ensures that you can't call this method with a value that isn't of the same type as the elements in the array.
+The `includes` method checks whether an array contains a given element. The type definition ensures that you can't call this method with a value that isn't of the same type as the elements in the array.
 <!--omit-from-slides end-->
 
 ---
@@ -224,9 +245,11 @@ Classes can also be generic. An alternative implementation of `Array` using a cl
 ```ts
 class Array<Element> {
 	length: number = 0;
+
 	includes(element: Element): boolean {
 		// Implementation for `includes`.
 	}
+
 	constructor(/* Constructor arguments */) {
 		// Constructor implementation
 	}
@@ -237,15 +260,23 @@ class Array<Element> {
 
 ## Implementations Of Generic Functions
 
-Let's assume you don't know what the implementation of this function is, you only have the type. What possible implementations could it have?
+Let's assume you don't know what the implementation of this function is, you only have the type. What possible implementations could it have (excluding side effects)?
 
 ```ts
 const identity = <A>(a: A): A => ???;
 ```
 
+---
+
+## Only One Implementation
+
 <!--omit-from-slides start-->
 There is _only one_ possible implementation of this function (excluding side effects), and that is to return `a`. It's not possible to call `.length` because `A` might not be an array type. It's not possible to add anything with `+` because `A` might not be a `number` or a `string` type.
 <!--omit-from-slides end-->
+
+```ts
+const identity = <A>(a: A): A => a;
+```
 
 ---
 
@@ -304,7 +335,8 @@ type HasLength = {
 	length: number;
 };
 
-const getLength = <A extends HasLength>(a: A): number => a.length;
+const getLength =
+	<A extends HasLength>(a: A): number => a.length;
 ```
 
 <!--omit-from-slides start-->
@@ -321,6 +353,10 @@ Multiple type parameters work in much the same way as multiple value parameters.
 
 ```ts
 const f = <A, B, C>(a: A, b: B): C => ???;
+
+type F<A, B, C> = ???;
+
+class F<A, B, C> {}
 ```
 
 ---
@@ -333,4 +369,8 @@ It's also possible to set defaults for type parameters, as is the case for value
 
 ```ts
 const f = <A, B = string, C = number>(a: A, b: B): C => ???;
+
+type F<A, B = string, C = number> = ???;
+
+class F<A, B = string, C = number> {}
 ```
