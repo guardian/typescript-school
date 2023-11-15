@@ -215,12 +215,14 @@ class BankAccount2 {
 
 ## Member Visibility
 
-Member visibility controls where we can see each member (fields and methods) from. There are 3 options:
+Member visibility controls where we can see each member (fields and methods) from. There are 4 modifiers:
 
-- `redadonly` fields. We cannot normally write to `readonly` fields
+- `readonly` fields. We cannot normally write to `readonly` fields
 - `public`. This is the default. We can see `public` members from anywhere
 - `protected`. We can see `protected` members from subclasses
 - `private`. We can only see `private` members from inside the declaring class
+
+You can use `readonly` alongside `public`, `protected` and `private`.
 
 ---
 
@@ -298,6 +300,61 @@ b.name;
 kids.name;
 kids.deposit(15);
 ```
+
+---
+
+## Private members
+
+JavaScript also has syntax for defining a private member:
+
+```js
+class MyClass {
+	#myPrivateMember = 0;
+}
+```
+
+What's the difference between `#` and TypeScript's `private`?
+
+---
+
+## Private members
+
+In TS-land, nothing! TypeScript will treat them both as private members. The main difference is in the JS that the TypeScript compiler generates:
+
+```js
+class MyClass {
+	#myPrivateMember = 0;
+}
+// generates...
+var _MyClass_privateMember;
+class MyClass {
+	constructor() {
+		_MyClass_privateMember.set(this, 0);
+	}
+}
+_MyClass_privateMember = new WeakMap();
+```
+
+This provides _some_ runtime privacy of the member.
+
+---
+
+## Private members
+
+```js
+class MyClass {
+	private myPrivateMember = 0;
+}
+// generates...
+"use strict";
+class MyClass {
+    constructor() {
+        this.privateMember = 0;
+    }
+}
+```
+
+This provides _no_ runtime privacy of the member. It's effectively public!
 
 ---
 
