@@ -24,13 +24,17 @@ Classes can be useful for grouping related data and behaviour together. They als
 They appear fairly frequently. You might have seen them in [GuCDK](https://github.com/guardian/cdk):
 
 ```ts
-class GuApiLambda extends GuLambdaFunction { /* Snip */ }
-const lambda = new GuApiLambda(this, 'lambda', { /* Snip */ })
+class GuApiLambda extends GuLambdaFunction {
+	/* Snip */
+}
+const lambda = new GuApiLambda(this, 'lambda', {
+	/* Snip */
+});
 ```
 
 ---
 
-## The relationship between classes, values and types 
+## The relationship between classes, values and types
 
 Based on what we've learned about TypeScript so far, does anything stand out about this?
 
@@ -158,7 +162,7 @@ class BankAccount {
 		this.balance = 0;
 	}
 }
-const b = new BankAccount()
+const b = new BankAccount();
 b.id = 50;
 console.log(b.id); // 50
 ```
@@ -227,14 +231,13 @@ The `readonly` visibility modifier can be applied to fields. It states that the 
 - the field initialiser
 - in the constructor
 
-
 ```ts
 class BankAccount {
-    readonly id: number;
-    readonly accountType = "student"
-    constructor(id: number) {
-        this.id = id;
-    }
+	readonly id: number;
+	readonly accountType = 'student';
+	constructor(id: number) {
+		this.id = id;
+	}
 }
 ```
 
@@ -246,7 +249,7 @@ class BankAccount {
 class BankAccount {
 	protected balance: number = 0;
 	private createdDate: Date = new Date();
-	name: string = "Jane";
+	name: string = 'Jane';
 }
 class KidsBankAccount extends BankAccount {
 	public deposit(amount: number) {
@@ -256,7 +259,9 @@ class KidsBankAccount extends BankAccount {
 
 	withdraw(amount: number) {
 		// ❌, createdDate is private
-		if (this.createdDate) {/* Snip */}
+		if (this.createdDate) {
+			/* Snip */
+		}
 	}
 }
 ```
@@ -269,11 +274,15 @@ class KidsBankAccount extends BankAccount {
 class BankAccount {
 	protected balance: number = 0;
 	private createdDate: Date = new Date();
-	name: string = "Jane"
+	name: string = 'Jane';
 }
 class KidsBankAccount extends BankAccount {
-	public deposit(amount: number) {/*Snip*/}
-	public withdraw(amount: number) {/*Snip*/}
+	public deposit(amount: number) {
+		/*Snip*/
+	}
+	public withdraw(amount: number) {
+		/*Snip*/
+	}
 }
 const b = new BankAccount();
 const kids = new KidsBankAccount();
@@ -299,10 +308,12 @@ class BankAccount {
 	private _balance: number = 0;
 
 	get balance(): number {
-		return this._balance
+		return this._balance;
 	}
 
-	set balance(b: number) { /* Snip */ }
+	set balance(b: number) {
+		/* Snip */
+	}
 }
 ```
 
@@ -319,20 +330,24 @@ class BankAccount {
 class BankAccount {
 	//      ┌───1───┐
 	private _balance: number;
-	
-	constructor() { /* Snip */ }
+
+	constructor() {
+		/* Snip */
+	}
 
 	//  ┌───2───┐
 	get balance(): number {
-		return this._balance
+		return this._balance;
 	}
 
-	//        ┌─3─┐                    
-	set balance(b) { /* Snip */ }
+	//        ┌─3─┐
+	set balance(b) {
+		/* Snip */
+	}
 }
 const b = new BankAccount();
 // ❌        ┌──4─┐
-b.balance = "12.30"
+b.balance = '12.30';
 ```
 
 ---
@@ -345,7 +360,7 @@ What is the implication of this snippet? We have a getter but no setter.
 class BankAccount {
 	private _balance: number = 0;
 	get balance(): number {
-		return this._balance
+		return this._balance;
 	}
 }
 ```
@@ -360,7 +375,7 @@ When we have a getter but no setter, the field is effectively `readonly`
 class BankAccount {
 	private _balance: number = 0;
 	get balance(): number {
-		return this._balance
+		return this._balance;
 	}
 }
 ```
@@ -392,7 +407,7 @@ class Derived extends Base {
 	}
 }
 const d = new Derived();
-console.log(d.sum()) // 15;
+console.log(d.sum()); // 15;
 ```
 
 ---
@@ -403,9 +418,9 @@ The `implements` clause is a TypeScript addition. We use `implements` to tell Ty
 
 ```ts
 interface BankAccount {
-    readonly balance: number;
+	readonly balance: number;
 	deposit(amount: number): void;
-    withdraw(amount: number): void;
+	withdraw(amount: number): void;
 }
 
 // ❌
@@ -430,7 +445,7 @@ If they have the same name, they will clash in the type namespace.
       │  A   │◄───┐           │  A   │
       │      │    │           │      │
       └──────┘    │           └───┬──┘
-         ▲        │               ▲ 
+         ▲        │               ▲
          │     ┌──┴─────────────┐ │
          │     │ interface A {} │ │
          │     │                │ │
@@ -447,16 +462,16 @@ Classes can implement multiple interfaces:
 
 ```ts
 interface Printable {
-    print(): void;
+	print(): void;
 }
 
 interface Loggable {
-    log(): void;
+	log(): void;
 }
 
 class Thing implements Printable, Loggable {
-    print(): void {}
-    log(): void {}
+	print(): void {}
+	log(): void {}
 }
 ```
 
@@ -468,16 +483,16 @@ Classes in TypeScript are compared _structurally_. If two classes have the same 
 
 ```ts
 class Class1 {
-    value: number = 0;
-    print(): void {
-        console.log(this.value)
-    }
+	value: number = 0;
+	print(): void {
+		console.log(this.value);
+	}
 }
 class Class2 {
-    value: number = 100;
-    print(): void {
-        console.log(this.value);
-    }
+	value: number = 100;
+	print(): void {
+		console.log(this.value);
+	}
 }
 // ✅
 const a: Class1 = new Class2();
@@ -489,11 +504,11 @@ const a: Class1 = new Class2();
 
 ```ts
 class Class1 {
-    private a: number = 0;
+	private a: number = 0;
 }
 
 class Class2 {
-    a: number = 0;
+	a: number = 0;
 }
 // ❌
 // Property 'a' is private in type 'Class1' but not in type 'Class2'
@@ -504,19 +519,35 @@ const a: Class2 = new Class1();
 
 ## Abstract
 
-The `abstract` modifier on fields and methods means they do not have an implementation provided. Abstract class members must exist on an `abstract` class.
+The `abstract` modifier on fields and methods means they do not have an implementation provided. Abstract class members can only exist on an `abstract` class.
+
+```ts
+// ❌ This is a concrete class. It can't have abstract members.
+class MyClass {
+  abstract myProp: number = 0;
+}
+
+// ✅ This is an abstract class. It can have abstract and concrete members.
+abstract class MyClass {
+  abstract myProp: number = 0 ;
+}
+```
+
+---
+
+## Abstract
 
 Abstract classes can't be directly instantiated; they must be subclassed.
 
 ```ts
 abstract class BankAccount {
-    readonly balance: number = 0;
-    abstract calculateInterest(): number;
+	readonly balance: number = 0;
+	abstract calculateInterest(): number;
 }
 
 class CurrentAccount extends BankAccount {
-    calculateInterest() {
-        return 0.001;
-    }
+	calculateInterest() {
+		return 0.001;
+	}
 }
 ```
