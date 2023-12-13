@@ -71,7 +71,7 @@ object Example {
 
 ## Classes In TypeScript
 
-As mentioned in session 5, TypeScript classes also create both types and values when they're defined:
+As mentioned in [session 5](../5-classes), TypeScript classes also create both types and values when they're defined:
 
 ```ts
 class Foo {}
