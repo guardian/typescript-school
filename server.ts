@@ -6,6 +6,7 @@ import remarkRehype from 'remark-rehype';
 import rehypeStringify from 'rehype-stringify';
 import remarkGfm from 'remark-gfm';
 import rehypeHighlight from 'rehype-highlight';
+import scala from 'highlight.js/lib/languages/scala';
 import type { Nodes, Root } from 'mdast';
 import { zone } from 'mdast-zone';
 
@@ -30,7 +31,7 @@ const processor = unified()
 	.use(remarkGfm)
 	.use(omitFromSlides)
 	.use(remarkRehype)
-	.use(rehypeHighlight)
+	.use(rehypeHighlight, { languages: { scala } })
 	.use(rehypeStringify);
 
 /** Markdown in, HTML out */
