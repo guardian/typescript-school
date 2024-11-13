@@ -366,7 +366,7 @@ const headlineColour = (theme: Theme): string => {
 ```
 
 <!--omit-from-slides start-->
-However, doing this will hide the consequences of adding `'Culture'` to `Pillar`. That change will no longer result in a type error, because the `default` case will handle `'Culture'`. This is problably not correct, as it will return `'grey'` rather than `'red'` like the other pillars. Sometimes it's preferable to be explicit and avoid this kind of general matching, as it limits how much help the compiler can provide.
+However, doing this will hide the consequences of adding `'Culture'` to `Pillar`. That change will no longer result in a type error, because the `default` case will handle `'Culture'`. This is probably not correct, as it will return `'grey'` rather than `'red'` like the other pillars. Sometimes it's preferable to be explicit and avoid this kind of general matching, as it limits how much help the compiler can provide.
 <!--omit-from-slides end-->
 
 ---
