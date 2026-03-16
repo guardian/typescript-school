@@ -10,6 +10,6 @@ information on how to structure this file.
 - Understand limitations of the dynamically-typed JavaScript runtime
   - Avoid casting with `as` and `!` and prefer validating instead
   - Avoid `any` and prefer `unknown` instead
-  - Avoid throwing errors and returning values instead
+  - Avoid throwing errors and prefer to return values instead
 - Get familiar with the syntax and IDE integration
 - Feel empowered to write more robust code
