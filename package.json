@@ -8,7 +8,7 @@
 		"lint:prettier": "prettier . --write",
 		"lint:package": "node ./node_modules/@guardian/package-linter/esm/cli.js ./package.json",
 		"start": "tsx server.ts",
-		"week-2-functions": "tsx 3-functions/functions.ts"
+		"week-2-functions": "tsx 2-functions/functions.ts"
 	},
 	"repository": {
 		"type": "git",
