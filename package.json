@@ -7,8 +7,8 @@
 		"lint": "npm run lint:package && npm run lint:prettier",
 		"lint:prettier": "prettier . --write",
 		"lint:package": "node ./node_modules/@guardian/package-linter/esm/cli.js ./package.json",
-		"start": "tsx server.ts",
-		"week-2-functions": "tsx 2-functions/functions.ts"
+		"start": "node server.ts",
+		"week-2-functions": "node 2-functions/functions.ts"
 	},
 	"repository": {
 		"type": "git",
@@ -37,8 +37,6 @@
 		"remark-gfm": "3.0.1",
 		"remark-parse": "10.0.2",
 		"remark-rehype": "10.1.0",
-		"tslib": "2.6.1",
-		"tsx": "4.21.0",
 		"typescript": "5.1.6",
 		"unified": "10.1.2"
 	}
