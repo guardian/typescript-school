@@ -1,5 +1,5 @@
 import { readFile, readdir } from 'node:fs/promises';
-import { RequestListener, createServer } from 'node:http';
+import { type RequestListener, createServer } from 'node:http';
 import { type Plugin, unified } from 'unified';
 import remarkParse from 'remark-parse';
 import remarkRehype from 'remark-rehype';
