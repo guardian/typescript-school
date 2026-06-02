@@ -49,34 +49,55 @@ const html = (markdown: string) =>
 			.join('\n'),
 	);
 
+const sessions = (template: string) => async (title: string, path: string) =>
+	template
+		.replace('<!-- TITLE -->', title)
+		.replace(
+			'<!-- MAIN -->',
+			`<ol>${(await readdir(`./${path}`))
+				.filter((name) => name.match(STARTS_WITH_DIGIT))
+				.map(
+					(session) =>
+						`<li><a href="/${path}/${session}">${session
+							.replace(STARTS_WITH_DIGIT, '')
+							.replaceAll('-', ' ')}</a></li>`,
+				)
+				.join('\n')}</ol>`,
+	);
+
 const requestListener: RequestListener = async (request, response) => {
 	const url = new URL(request.url ?? '/', `http://${request.headers.host}`);
 
 	const template = await readFile('./assets/template.html', 'utf-8');
+	const sessionsTemplate = sessions(template);
 	const styles = await readFile('./assets/styles.css', 'utf-8');
 
 	switch (url.pathname) {
-		case '/': {
+		case '/':
 			response.end(
-				template.replace('<!-- TITLE -->', 'TypeScript School').replace(
-					'<!-- MAIN -->',
-					`<ol>${(await readdir('.'))
-						.filter((name) => name.match(STARTS_WITH_DIGIT))
-						.map(
-							(session) =>
-								`<li><a href="/${session}">${session
-									.replace(STARTS_WITH_DIGIT, '')
-									.replaceAll('-', ' ')}</a></li>`,
-						)
-						.join('\n')}</ol>`,
-				),
+				template
+					.replace('<!-- TITLE -->', 'Languages')
+					.replace('<!-- MAIN -->',
+						`<a href="/typescript">TypeScript</a><a href="/scala">Scala</a>`
+					)
+			)
+			return;
+		case '/typescript': {
+			response.end(
+				await sessionsTemplate('TypeScript School', 'typescript'),
+			);
+			return;
+		}
+		case '/scala': {
+			response.end(
+				await sessionsTemplate('Scala School', 'scala'),
 			);
 			return;
 		}
 		default: {
 			response.end(
 				template
-					.replace('<!-- TITLE -->', 'TypeScript School')
+					.replace('<!-- TITLE -->', 'Session')
 					.replace('<!-- STYLES -->', `<style>${styles}</style>`)
 					.replace('<!-- MAIN -->', await session(url.pathname)),
 			);
