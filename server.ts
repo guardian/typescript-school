@@ -90,7 +90,7 @@ const requestListener: RequestListener = async (request, response) => {
 		}
 		case '/scala': {
 			response.end(
-				await sessionsTemplate('Scala School', 'scala'),
+				await sessionsTemplate('Scala School', 'scala/evaluated-docs'),
 			);
 			return;
 		}
