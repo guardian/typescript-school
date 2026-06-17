@@ -17,6 +17,48 @@ There's a chapter on them in the TypeScript handbook: https://www.typescriptlang
 
 ---
 
+
+## Why TypeScript?
+
+TypeScript helps us:
+
+- Catch bugs before production
+- Refactor with confidence
+- Improve autocomplete and developer experience
+- Document expected data shapes
+
+### Example: Preventing Bugs
+
+```ts
+function getUserName(user) {
+	return user.name.toUpperCase();
+}
+
+getUserName(undefined);
+```
+
+Runtime:
+
+```txt
+Cannot read properties of undefined
+```
+
+With TypeScript:
+
+```ts
+type User = {
+	name: string;
+};
+
+function getUserName(user: User) {
+	return user.name.toUpperCase();
+}
+```
+
+TypeScript warns us before the code reaches production.
+
+---
+
 ## Type Inference for Primitives
 
 TypeScript often infers the types of primitives based on their initial values. For example, if you declare
@@ -44,10 +86,11 @@ const name: string = 'John';
 You can create custom type aliases using type to make your code more readable. For example,
 
 ```ts
-type Age = number;
+type UserId = string;
+type ArticleId = string;
+type Currency = 'GBP' | 'USD' | 'EUR';
 ```
 
-allows you to use `Age` instead of number for clarity.
 
 #### with Unions
 
@@ -56,6 +99,8 @@ type Currency = 'USD' | 'EUR' | 'GBP'; // Type alias for a currency
 type Price = number | string; // Union type for price, which can be a number or a formatted string
 ```
 
+allows you to use `UserId` instead of `string` for additional meaning and clarity.
+
 ---
 
 ## Union Types
@@ -63,10 +108,27 @@ type Price = number | string; // Union type for price, which can be a number or 
 You can define a variable that can hold multiple types using union types. For instance,
 
 ```ts
-let result: number | string;
+type Status =
+	| 'loading'
+	| 'success'
+	| 'error';
 ```
 
-allows `result` to be either a number or a string.
+```ts
+function render(status: Status) {
+	if (status === 'loading') {
+		return 'Loading...';
+	}
+
+	if (status === 'success') {
+		return 'Success!';
+	}
+
+	return 'Error!';
+}
+```
+
+This allows us to model a value that can only be one of several known states.
 
 ---
 
@@ -110,16 +172,16 @@ if (userHasMadeSelection) {
 
 ### The undefined Type
 
-- `undefined`` represents a variable that has been declared but hasn't been assigned a value.
+- `undefined` represents a variable that has been declared but hasn't been assigned a value.
 - It signifies that a variable exists, but its value is not defined.
 - Variables declared without initialization are automatically assigned the undefined value.
 
 ```ts
 // Demonstrating undefined for uninitialized variables
-let uninitializedVariable: string | undefined;
+let uninitialisedVariable: string | undefined;
 
 if (conditionIsMet) {
-	uninitializedVariable = 'Initialized value';
+	uninitialisedVariable = 'Initialized value';
 }
 ```
 
@@ -129,6 +191,44 @@ null and undefined can be assigned to variables, function parameters, and object
 They can be explicitly assigned to indicate the absence of data or uninitialized values.
 
 ---
+
+## string | undefined
+
+Probably the most important concept in the whole session.
+
+```ts
+type User = {
+	email?: string;
+};
+
+const user: User = {};
+```
+
+What's the type of:
+
+```ts
+user.email
+```
+
+Answer:
+`string | undefined`
+
+Therefore:
+```ts
+user.email.toLowerCase();
+```
+
+❌ Not safe
+
+Need:
+```ts
+if (user.email) {
+	user.email.toLowerCase();
+}
+```
+
+---
+
 
 ## Bringing these together
 
@@ -141,7 +241,9 @@ They can be explicitly assigned to indicate the absence of data or uninitialized
 Type guards are functions that help narrow down the type of a value within a conditional block. For instance,
 
 ```ts
-if (typeof value === 'string') { /* value is a string here */ }.
+if (typeof value === 'string') {
+	/* value is a string here */
+}
 ```
 
 This will be delved deeper in session 4 however.
