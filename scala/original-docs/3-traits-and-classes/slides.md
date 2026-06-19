@@ -228,7 +228,7 @@ will.welcome("Jane")
 In Scala, all values have a type, including numerical values and functions. The diagram illustrates a subset of the type hierarchy.
 <!--omit-from-slides end-->
 
-![Scala Type Hierarchy](https://docs.scala-lang.org/resources/images/tour/unified-types-diagram.svg)
+![Scala Type Hierarchy](class-diagram.png)
 
 https://docs.scala-lang.org/tour/unified-types.html
 
