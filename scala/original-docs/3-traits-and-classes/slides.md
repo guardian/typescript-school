@@ -20,7 +20,7 @@ We'll cover:
 * A template for the creation of object instances.
 <!--omit-from-slides end-->
 
-```scala 
+```scala mdoc:silent:reset 
 class Robot(name: String)
 
 val tom = new Robot("Tom")
@@ -36,7 +36,7 @@ Values are immutable. Scala generates the getter method.
 <!--omit-from-slides end-->
 
 
-```scala
+```scala mdoc:silent:reset 
 class Robot(val name: String) // The name is declared as an immutable value
 
 val robot = new Robot("Tom")
@@ -54,7 +54,7 @@ Variables are mutable. Scala generates a getter and a setter.
 <!--omit-from-slides end-->
 
 
-```scala 
+```scala mdoc:silent:reset 
 class Robot(var name: String) // Name is mutable
 
 val robot = new Robot("Tom")
@@ -65,56 +65,33 @@ robot.name // returns "John"
 
 ---
 
-### private
-
-```scala 
-class Robot(private var name: String) {
-  def getName: String = name
-  def setName(name: String): Unit = this.name = name
-}
-
-val robot = new Robot("Tom")
-
-robot.name // compilation error: Symbol name is inaccessible from this place
-robot.getName  // returns "Tom"
-robot.setName("John")
-robot.getName  // returns "John"
-```
-
----
-
-```scala 
-class Robot(private val name: String) {
-  def getName: String = name
-  def setName(name: String): Unit = this.name = name // Compilation error: Reassignment to val
-}
-
-val robot = new Robot("Tom")
-
-robot.name // compilation error: Symbol name is inaccessible from this place
-robot.getName // returns "Tom"
-```
-
----
-
 ### Visibility of constructor fields
 
 * var: getter and setter
 * val: getter
 * default (no var or val): I cannot access or mutate the field 
-* Adding private keyword to val or var: I cannot access or mutate the field 
 
 ---
 
-### Methods
+### Methods and private keyword
 
-```scala 
-class Robot(val name:String) {
-  def welcome(n: String): Unit = println(s"Welcome $n! My name is $name.")
+```scala mdoc:silent:reset 
+class Animal {
+  private def breathe() = println("I’m breathing")
+
+  def walk() = {
+    breathe()
+    println("I’m walking")
+  }
+  
+  def speak() = println("Hello")
 }
 
-val tom = new Robot("Tom")
-tom.welcome("Mary") // Welcome Mary! My name is Tom.
+val animal = new Animal()
+animal.speak()
+animal.walk()
+// animal.breathe() // won't compile
+
 ```
 
 ---
@@ -125,8 +102,8 @@ tom.welcome("Mary") // Welcome Mary! My name is Tom.
 In Scala, classes have methods and additional fields defined in the body of the class. The body is initialised as part of the default constructor.
 <!--omit-from-slides end-->
 
-```scala 
-class Person(var firstName: String, var lastName: String) {
+```scala mdoc:silent:reset 
+class Person(firstName: String, lastName: String) {
   println("Constructor begins")
 
   // some class fields
@@ -152,7 +129,7 @@ class Person(var firstName: String, var lastName: String) {
 
 ### No parameters class
 
-```scala 
+```scala mdoc:silent:reset 
 class Robot {
   val name = "Tom"
   val age = 12
@@ -171,7 +148,7 @@ robot.age // 12
 When more than one class parameters have the same type, you should use named parameters to improve readability and avoid ambiguity.
 <!--omit-from-slides end-->
 
-```scala 
+```scala mdoc:silent:reset 
 class Coordinate(latitude: Double, longitude: Double)
 
 new Coordinate(42.42, 24.24)
@@ -187,14 +164,14 @@ new Coordinate(longitude = 24.24, latitude = 42.42)
 A parameter can have a default value in the constructor declaration.
 <!--omit-from-slides end-->
 
-```scala 
+```scala mdoc:silent:reset 
 class Socket(val timeout: Int = 10000)
 
-val s = new Socket()
-s.timeout // 10000
+val s1 = new Socket()
+s1.timeout // 10000
 
-val s = new Socket(5000)
-s.timeout // 5000
+val s2 = new Socket(5000)
+s2.timeout // 5000
 ```
 
 ---
@@ -203,16 +180,16 @@ s.timeout // 5000
 Consumers of this code can create classes as though the class had alternate constructors.
 <!--omit-from-slides end-->
 
-```scala 
-class Socket(val timeout: Int = 5_000, val linger: Int = 5_000) {
+```scala mdoc:silent:reset 
+class Socket(timeout: Int = 5000, linger: Int = 5000) {
   override def toString = s"timeout: $timeout, linger: $linger"
 }
 
-val s = new Socket()                  // timeout: 5000, linger: 5000
-val s = new Socket(2_500)             // timeout: 2500, linger: 5000
-val s = new Socket(10_000, 10_000)    // timeout: 10000, linger: 10000
-val s = new Socket(timeout = 10_000)  // timeout: 10000, linger: 5000
-val s = new Socket(linger = 10_000)   // timeout: 5000, linger: 10000
+val s1 = new Socket()                  // timeout: 5000, linger: 5000
+val s2 = new Socket(2500)             // timeout: 2500, linger: 5000
+val s3 = new Socket(10000, 10000)    // timeout: 10000, linger: 10000
+val s4 = new Socket(timeout = 10000)  // timeout: 10000, linger: 5000
+val s5 = new Socket(linger = 10000)   // timeout: 5000, linger: 10000
 ```
 
 ---
@@ -223,7 +200,7 @@ val s = new Socket(linger = 10_000)   // timeout: 5000, linger: 10000
 An object class derived from another class (its superclass) from which it inherits a base set of properties and methods.
 <!--omit-from-slides end-->
 
-```scala
+```scala mdoc:silent:reset
 class Robot(val name: String = "Unknown") {
   def welcome(n: String) = s"Welcome $n! My name is $name"
 }
@@ -260,9 +237,11 @@ https://docs.scala-lang.org/tour/unified-types.html
 <!--omit-from-slides start-->
 Here is an example that demonstrates that strings, integers, characters, boolean values,
 and functions are all of type `Any` just like every other object:
+
+Most of the time we want to be specific. In real life we hardly see `Any`.
 <!--omit-from-slides end-->
 
-```scala
+```scala mdoc:silent:reset
 val list: List[Any] = List(
   "a string",
   732,  // an integer
@@ -288,9 +267,10 @@ list.foreach(element => println(element))
 * A mechanism for checking a value against a pattern. 
 * A more powerful version of the switch statement 
 * Can be used in place of a series of if/else statements.
+* Compiler will warn you if you don't handle all cases
 <!--omit-from-slides end-->
 
-```scala
+```scala mdoc:silent:reset
 import scala.util.Random
 
 val x: Int = Random.nextInt(10)
@@ -305,18 +285,17 @@ x match {
 
 ---
 
-## Objects
+## Companion objects
 
 <!--omit-from-slides start-->
 A class that has exactly one instance. It’s initialized lazily when its members are referenced. 
 The first time you request access to an object, the JVM allocates it in memory; 
 following references to the same object do not trigger any new instantiation because the JVM reuses 
-its first memory allocation, a model called singleton pattern. In Scala the word object refers 
-both to a singleton and an instance of a class.
+its first memory allocation, a model called singleton pattern. 
 <!--omit-from-slides end-->
 
 
-```scala
+```scala mdoc:silent:reset
 object StringUtils {
   def truncate(s: String, length: Int): String = s.take(length)
   def containsWhitespace(s: String): Boolean = s.matches(".*\\s.*")
@@ -331,7 +310,7 @@ StringUtils.truncate("Joe Smith", 5)  // Joe S
 You can import all members of an object
 <!--omit-from-slides end-->
 
-```scala
+```scala mdoc:silent
 import StringUtils._
 truncate("Chuck Bartowski", 5)       // "Chuck"
 containsWhitespace("Sarah Walker")   // true
@@ -342,7 +321,7 @@ isNullOrEmpty("John Casey")          // false
 or just some members:
 <!--omit-from-slides end-->
 
-```scala
+```scala mdoc:silent
 import StringUtils.{truncate, containsWhitespace}
 truncate("Charles Carmichael", 7)       // "Charles"
 containsWhitespace("Captain Awesome")   // true
@@ -354,7 +333,7 @@ isNullOrEmpty("Morgan Grimes")          // Not found: isNullOrEmpty (error)
 Objects can also contain fields, which are also accessed like static members
 <!--omit-from-slides end-->
 
-```scala
+```scala mdoc:silent:reset
 object MathConstants {
   val PI = 3.14159
   val E = 2.71828
@@ -373,7 +352,7 @@ println(MathConstants.PI)   // 3.14159
 * Used for methods and values that are not specific to instances of the companion class.
 <!--omit-from-slides end-->
 
-```scala
+```scala mdoc:silent:reset
 import scala.math._
 
 class Circle(val radius: Double) {
@@ -398,7 +377,7 @@ Companion objects contain:
 
 ### apply and unapply method
 
-```scala
+```scala mdoc:silent:reset
 class Person {
   var name = ""
   var age = 0
@@ -432,13 +411,17 @@ val p2 = Person("Fred", 29)
 
 ### Pattern matching on objects and pattern guard
 
-```scala
+```scala mdoc:silent
 Person.unapply(p2) // Option[(String, Int)] = Some((Fred,29))
 
 val driverLicenseStatus = p2 match {
   case Person(_, age) if age < 18 => "You are not allowed to get a driver license."
   case Person(_, age) if age >= 18 => "You are allowed to get a driver's license."
 }
+
+val driverLicenseStatus2 = if (p2.age < 18) "You are not allowed to get a driver license." else "You are allowed to get a driver's license."
+
+
 ```
 
 ---
@@ -450,7 +433,7 @@ Scala trait is similar to an interface in Java. Traits can contain:
 * Concrete methods and fields
 <!--omit-from-slides end-->
 
-```scala
+```scala mdoc:silent:reset
 trait Animal {
   def sleep = "ZzZ"
   def eat(food: String): String
@@ -470,7 +453,7 @@ trait Nameable {
 and fields that you still need to implement.
 <!--omit-from-slides end-->
 
-```scala
+```scala mdoc:silent
 class Cat extends Animal {
   override val sleep = "sleepy cat!"
   def eat(food: String) = s"the cat is eating $food"
@@ -487,18 +470,7 @@ class Dog(val name: String) extends Animal with Nameable {
 
 ### The entry point of a program
 
-#### Using object
-
-```scala
-object HelloWorld {
-    def main(args: Array[String]): Unit = {
-      println("Hello world!")
-    }
-}
-```
-
-#### Using object and trait
-```scala
+```scala mdoc:silent:reset
 object HelloWorld extends App {
   println("Hello world!")
 }
@@ -511,6 +483,7 @@ object HelloWorld extends App {
 <!--omit-from-slides start-->
 * Use a sealed trait to limit the elements that extend it.
 * All the components that extend the trait are in the same file where the interface is declared.
+* Compiler will warn you if you don't handle all the cases
 <!--omit-from-slides end-->
 
 ```scala
@@ -543,7 +516,7 @@ but historically there have been two situations where it’s better to use an ab
 * The code will be called from Java code
 <!--omit-from-slides end-->
 
-```scala
+```scala mdoc:silent:reset
 abstract class Pet(name: String) {
   def greeting: String
   def age: Int
@@ -569,28 +542,26 @@ Case classes are used to model immutable data structures.
 * They have a default `unapply` method so you can pattern match.
 * They have a default `toString` method.
 * Since they are immutable they have a `copy` method  to easily create new instances
-* They are Serializable. 
 <!--omit-from-slides end-->
 
-```scala
+```scala mdoc:silent:reset
 case class Person(name: String, relation: String)
 
 val christina = Person("Christina", "niece")
 
-christina.name = "Fred"   // error: reassignment to val
+//christina.name = "Fred"   // error: reassignment to val
 println(christina) // Person(Christina,niece)
 ```
   
 ---
 
-```scala
+```scala mdoc:silent:reset
 case class Message(sender: String, recipient: String, body: String)
 
 val message2 = Message("joe.smith@gmail.com", "mary.smith@gmail.com", "Hello")
 val message3 = Message("joe.smith@gmail.com", "mary.smith@gmail.com", "Hello")
 val messagesAreTheSame = message2 == message3  // true
 
-case class Message(sender: String, recipient: String, body: String)
 val message4 = Message("bob@gmail.com", "alice@gmail.com", "Hello")
 val message5 = message4.copy(sender = message4.recipient, recipient = "claire@gmail.com")
 message5.sender  // alice@gmail.com
@@ -605,7 +576,7 @@ println(message5) // Message(alice@gmail.com,claire@gmail.com,Hello)
 
 ## Case classes and pattern matching
 
-```scala
+```scala 
 sealed trait Message
 case class PlaySong(name: String) extends Message
 case class IncreaseVolume(amount: Int) extends Message
@@ -628,26 +599,26 @@ Case objects are used to model singleton ideas, where the singleton itself is th
 * No need for extra arguments so it also doesn’t need any `apply`, `copy` or `unapply` methods 
 * No need for `equals` because singletons can only be defined once.
 * They have an improved `toString` implementation
-* They’re Serializable
 <!--omit-from-slides end-->
 
 ## Case objects and Pattern matching
 
-```scala
-sealed trait SwitchState
-case object On extends SwitchState
-case object Off extends SwitchState
+```scala mdoc:reset
+sealed trait Suit
+case object Clubs extends Suit
+case object Diamonds extends Suit
+case object Hearts extends Suit
+object Spades extends Suit
 
-def getSwitchState(switchState: SwitchState) = switchState match {
-  case On => "On"
-  case Off => "Off"
-} 
+println(Clubs) 
+println(Diamonds) 
+println(Spades)
 
 ```
 
 ---
 
-```scala
+```scala 
 sealed trait Message
 case class PlaySong(name: String) extends Message
 case class IncreaseVolume(amount: Int) extends Message
@@ -663,6 +634,12 @@ def handleMessages(message: Message): Unit = message match {
 
 ```
 ---
+
+```scala
+sealed trait OptionalString 
+case class SomeString(value: String) extends OptionalString
+case object NoString extends OptionalString
+```
 
 ## Homework
 Think how would you model the data in the Election Results exercise: 
