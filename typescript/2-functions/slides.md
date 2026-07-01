@@ -1,50 +1,55 @@
 ## Functions
 
-In JavaScript, functions are first-class objects. We can:
+In JavaScript, functions are first-class objects which means they can be treated like any other value. We can:
 
 - assign them to variables
 - pass them to other functions
 - return them from functions
 - call them!
 
-With TypeScript, we can define:
+TypeScript builds on JavaScript by letting us describe a function's type:
 
-- how many parameters a function takes, and what types they have
-- what values the function can return (the "return type")
+- how many parameters it accepts
+- the type of each parameter
+- the type of value it returns (the return type)
 
-This enables us to work with functions in a type-safe way.
+This allows us to catch mistakes at compile time and work with functions in a type-safe way.
 
 ---
 
-## Declaring Functions in JavaScript
+## Defining Functions in JavaScript
 
-There are four common ways of declaring functions in JavaScript:
+There are four common ways to define functions in JavaScript:
 
 ```js
-function a(b, c) {
-	return b + c;
+// Function declaration
+function add(x, y) {
+	return x + y;
 }
 
-const d = (e, f) => {
-	return e + f;
+// Arrow function
+const addArrow = (x, y) => {
+	return x + y;
 };
 
-const g = (h, i) => h + i;
+// Concise arrow function (implicit return)
+const addShort = (x, y) => x + y;
 
-const j = function (k, l) {
-	return k + l;
+// Function expression
+const addExpression = function (x, y) {
+	return x + y;
 };
 ```
 
 ---
 
-## Declaring Functions in JavaScript
+## Understanding Functions in JavaScript
 
 In the example below,
 
-1. what type of value does this function return?
-2. what values can we pass as arguments for this function to work correctly?
-3. how many arguments can we call this function with?
+1. What type of value does this function return?
+2. What kinds of values should we pass as arguments for it to work correctly?
+3. How many arguments does this function expect?
 
 ```js
 function a(b, c) {
@@ -54,9 +59,9 @@ function a(b, c) {
 
 ---
 
-## Declaring Functions in JavaScript
+## What types are involved here?
 
-### We don't know! 😬
+### We don't really know! 😬
 
 ```js
 function a(b, c) {
@@ -71,7 +76,7 @@ a('hello', 'goodbye');
 Adding types to a function helps us verify that we are:
 
 - passing the correct number and type of arguments
-- using return value correctly, given its type
+- using return value correctly, based on its type
 
 ---
 
@@ -79,11 +84,11 @@ Adding types to a function helps us verify that we are:
 
 There are 3 ways to annotate a function with types:
 
-- Short hand
-- Inline
-- Call signatures (or long hand). We'll cover these towards the end of this session.
+- Short hand function type expression
+- Inline function annotations
+- Call signatures (Object-style syntax for advanced use cases)
 
-You're most likely to encounter short hand and inline type annotations.
+👉 You’ll most often see shorthand and inline types in real codebases.
 
 ---
 
@@ -110,13 +115,21 @@ const stringLength: StringLength = (str) => str.length;
 
 ## Adding Types
 
-### Inline
+### Inline function annotations
+
+We can add types directly when defining a function.
+
+We are typing the function directly in its definition, without using a separate function type.
 
 ```ts
 //                     ───1──   ───2──
 function greeter(name: string): string {
 	return `Hi, ${name}!`;
 }
+
+const greeterArrow = (name: string): string => {
+	return `Hi, ${name}!`;
+};
 ```
 
 1. the parameter's type
@@ -128,12 +141,19 @@ function greeter(name: string): string {
 
 ### Call signatures
 
+We can describe a function type using object syntax.
+Call signatures are used when a function is also an object that holds properties
+
 ```ts
 //   ────1───
 type LengthFn = {
 	(str: string): number;
 	//    ───2──   ───3──
+	description: string;
 };
+
+const stringLength: LengthFn = (str) => str.length;
+stringLength.description = 'Measures string length';
 ```
 
 1. the type name
@@ -156,6 +176,7 @@ function greeter(name: string): string {
 // ----- Call signature ----- //
 type LengthFn = {
 	(str: string): number;
+	description: string;
 };
 ```
 
@@ -299,7 +320,7 @@ function doNothing2(): void {
 
 ## Anonymous Functions and Callbacks
 
-In some cases, TypeScript can infer a parameter's type. For example:
+In some cases, TypeScript can infer a parameter's type from context. For example:
 
 ```ts
 //              1
@@ -348,9 +369,8 @@ type Props = {
 };
 
 // A React component
-function Caption(
-		{ captionText, credit, displayCredit }: Props) => {
-	return <></>
+function Caption({ captionText, credit, displayCredit }: Props) {
+	return <></>;
 }
 ```
 
