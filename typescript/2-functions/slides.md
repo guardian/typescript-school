@@ -22,23 +22,19 @@ This allows us to catch mistakes at compile time and work with functions in a ty
 There are four common ways to define functions in JavaScript:
 
 ```js
-// Function declaration
 function add(x, y) {
 	return x + y;
 }
 
-// Arrow function
+const addExpression = function (x, y) {
+	return x + y;
+};
+
 const addArrow = (x, y) => {
 	return x + y;
 };
 
-// Concise arrow function (implicit return)
 const addShort = (x, y) => x + y;
-
-// Function expression
-const addExpression = function (x, y) {
-	return x + y;
-};
 ```
 
 ---
@@ -84,7 +80,7 @@ Adding types to a function helps us verify that we are:
 
 There are 3 ways to annotate a function with types:
 
-- Short hand function type expression
+- Short hand (Function type expression)
 - Inline function annotations
 - Call signatures (Object-style syntax for advanced use cases)
 
@@ -94,7 +90,7 @@ There are 3 ways to annotate a function with types:
 
 ## Adding Types
 
-The **shorthand** annotation assigns a "function type expression" to a type name.
+The **shorthand** approach uses a "function type expression" to define a type name.
 
 ```ts
 //                        ┌──3─┐     ┌──4─┐
@@ -117,9 +113,7 @@ const stringLength: StringLength = (str) => str.length;
 
 ### Inline function annotations
 
-We can add types directly when defining a function.
-
-We are typing the function directly in its definition, without using a separate function type.
+We can add types directly when defining a function without using a separate function type.
 
 ```ts
 //                     ───1──   ───2──
@@ -147,9 +141,9 @@ Call signatures are used when a function is also an object that holds properties
 ```ts
 //   ────1───
 type LengthFn = {
-	(str: string): number;
+	(str: string): number; // 👈 1. The Call Signature
 	//    ───2──   ───3──
-	description: string;
+	description: string; // 👈 2. A normal object property
 };
 
 const stringLength: LengthFn = (str) => str.length;
@@ -394,13 +388,13 @@ head([1, 2, 3]); // returns 1
 
 ## Functions as Values
 
-We can use TypeScript to specify that a value should be a function with a specified signature. This is useful for callbacks:
+In JavaScript, functions are first-class values, meaning they can be passed around just like strings or numbers.
+
+We can use TypeScript to enforce a specific signature for these function values, which is useful for defining callbacks:
 
 ```ts
 type NumberOp = (num1: number, num2: number) => number;
-const add: NumberOp = (num1: number, num2: number): number => {
-	return num1 + num2;
-};
+const add: NumberOp = (num1, num2) => num1 + num2;
 
 function doOperation(operation: NumberOp, num1: number, num2: number): number {
 	return operation(num1, num2);
@@ -412,35 +406,35 @@ doOperation(add, 3, 2);
 
 ## Function Overloading
 
-Sometimes we want to call a function in different ways:
+Sometimes we want to call a single function in completely different ways:
 
 ```ts
 makeDate(2023, 05, 20);
 makeDate("2023-05-20");
 ```
 
-We write multiple call signatures for a function using function overloading.
+To support this, we write multiple overload (call) signatures, followed by exactly one implementation signature.
 
-We can write multiple function signatures and _one_ implementation signature.
-
-The implementation signature must handle all variants of the call signatures.
+👉 Crucial Rule: The implementation signature must be broad enough to handle all variants, but it is completely invisible to the outside world. Callers can only use the overload signatures.
 
 ---
 
 ## Function Overloading
 
 ```ts
-// Call signature 1
+// Overload Signature 1: Accepts a string
 function makeDate(dateStr: string): Date;
-// Call signature 2
-function makeDate(day: number, month: number, year: number): Date;
-// Implementation signature & implementation
+
+// Overload Signature 2: Accepts three numbers (Year, Month, Day)
+function makeDate(year: number, month: number, day: number): Date;
+
+// Implementation Signature & Body
 function makeDate(
-	strOrDay: string | number,
+	yearOrStr: number | string,
 	month?: number,
-	year?: number,
+	day?: number,
 ): Date {
-	if (typeof strOrDay === 'string') {
+	if (typeof yearOrStr === 'string') {
 		// Call signature 1
 	} else {
 		// Call signature 2
@@ -455,8 +449,8 @@ function makeDate(
 JavaScript doesn't actually support function overloading.
 If you define a function multiple times (`function name() {}`), the last definition "wins".
 
-TypeScript's function overloading is just syntactic sugar over the JavaScript constructs.
+TypeScript's function overloading is just a compile-time feature; the extra signatures are completely erased when compiled to JavaScript.
 
 The result is behaviour that _looks_ like overloading.
 
-The reality is it can require a complex function signature and body to handle the different inputs.
+👉 The Reality: The compiled JavaScript is just one single function. Because of this, your TypeScript implementation signature and function body must be flexible enough to handle all the different variations at runtime.
