@@ -1,0 +1,10 @@
+.bsp/
+target/
+
+# Scala-IDE specific
+.bloop
+.metals
+metals.sbt
+
+# mdoc is configured in 'build.sbt' to output to this folder with the 'mdocOut' setting
+evaluated-docs/

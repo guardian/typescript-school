@@ -4,7 +4,7 @@
 
 Languages covered
 - [Typescript](./typescript)
-- [Scala](./scala)
+- [Scala](./scala) - note this also requires [running `mdoc`](scala/README.md#evaluating-scala-snippets)
 
 
 This repo allows the school sessions to be taught by converting the markdown to slides.
