@@ -581,12 +581,12 @@ The `abstract` modifier on fields and methods means they do not have an implemen
 ```ts
 // ❌ This is a concrete class. It can't have abstract members.
 class MyClass {
-  abstract myProp: number = 0;
+	abstract myProp: number;
 }
 
 // ✅ This is an abstract class. It can have abstract and concrete members.
 abstract class MyClass {
-  abstract myProp: number = 0 ;
+	abstract myProp: number;
 }
 ```
 
