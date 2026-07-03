@@ -602,9 +602,15 @@ abstract class BankAccount {
 	abstract calculateInterest(): number;
 }
 
+// ❌  Cannot create an instance of an abstract class.
+const b = new BankAccount();
+
 class CurrentAccount extends BankAccount {
 	calculateInterest() {
 		return 0.001;
 	}
 }
+
+// ✅ This is concrete so we can instantiate it
+const c = new CurrentAccount();
 ```
