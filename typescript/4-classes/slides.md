@@ -452,6 +452,8 @@ Classes can inherit members from other classes. There are two mechanisms:
 
 With `extends`, we can inherit members from a base class. We can also define new methods and fields on the "derived" class.
 
+Classes can only extend a single other class.
+
 ```ts
 class Base {
 	field1: number = 10;
@@ -515,7 +517,7 @@ If they have the same name, they will clash in the type namespace.
 
 ## Class Heritage - `implements`
 
-Classes can implement multiple interfaces:
+Classes can only extend one other class, but can implement multiple interfaces:
 
 ```ts
 interface Printable {
