@@ -452,6 +452,8 @@ Classes can inherit members from other classes. There are two mechanisms:
 
 With `extends`, we can inherit members from a base class. We can also define new methods and fields on the "derived" class.
 
+Classes can only extend a single other class.
+
 ```ts
 class Base {
 	field1: number = 10;
@@ -515,7 +517,7 @@ If they have the same name, they will clash in the type namespace.
 
 ## Class Heritage - `implements`
 
-Classes can implement multiple interfaces:
+Classes can only extend one other class, but can implement multiple interfaces:
 
 ```ts
 interface Printable {
@@ -581,12 +583,12 @@ The `abstract` modifier on fields and methods means they do not have an implemen
 ```ts
 // ❌ This is a concrete class. It can't have abstract members.
 class MyClass {
-  abstract myProp: number = 0;
+	abstract myProp: number;
 }
 
 // ✅ This is an abstract class. It can have abstract and concrete members.
 abstract class MyClass {
-  abstract myProp: number = 0 ;
+	abstract myProp: number;
 }
 ```
 
@@ -602,9 +604,15 @@ abstract class BankAccount {
 	abstract calculateInterest(): number;
 }
 
+// ❌  Cannot create an instance of an abstract class.
+const b = new BankAccount();
+
 class CurrentAccount extends BankAccount {
 	calculateInterest() {
 		return 0.001;
 	}
 }
+
+// ✅ This is concrete so we can instantiate it
+const c = new CurrentAccount();
 ```
