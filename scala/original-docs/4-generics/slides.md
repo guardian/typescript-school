@@ -344,11 +344,119 @@ Here the `<:` operator says that `A` has to be a sub-type of `Seq`, which is a t
 
 ---
 
-## Other Generic Constraints
+## Type Hierarchy
 
 <!--omit-from-slides start-->
-There are other kinds of generic constraints detailed in the Scala docs:
+Imagine an `Animal` trait that has multiple sub-classes representing different types of animals.
 <!--omit-from-slides end-->
 
-- Lower Type Bounds: https://docs.scala-lang.org/tour/lower-type-bounds.html
-- Variances: https://docs.scala-lang.org/tour/variances.html
+```scala
+trait Animal
+
+class Cat extends Animal
+class Dog extends Animal
+```
+
+<!--omit-from-slides start-->
+`Cat` and `Dog` are **sub-types** of `Animal`. `Animal` is a **super-type** of both `Cat` and `Dog`.
+<!--omit-from-slides end-->
+
+---
+
+## Upper and Lower Type Bounds
+
+<!--omit-from-slides start-->
+There are two kinds of generic constraints to represent sub-type and super-type relationships.
+<!--omit-from-slides end-->
+
+An upper type bound states that `A` must be a sub-type of `Animal`:
+
+```scala
+A <: Animal
+```
+
+A lower type bound states that `A` must be a super-type of `Animal`:
+
+```scala
+A >: Animal
+```
+
+---
+
+## Invariance
+
+<!--omit-from-slides start-->
+Imagine you have a box that can store all kinds of things, so it's defined with a generic type parameter.
+<!--omit-from-slides end-->
+
+```scala
+class Box[A]
+```
+
+If a type `Cat` is a sub-type of `Animal`, is a `Box[Cat]` a sub-type of `Box[Animal]`?
+
+<!--omit-from-slides start-->
+It's not because, by default, type parameters are **invariant**. This means that two instances of the same generic type, e.g. a `Box`, do not have any sub-typing relationship, even if the types they contain do.
+<!--omit-from-slides end-->
+
+---
+
+## Covariance
+
+<!--omit-from-slides start-->
+To allow generic types to inherit the sub-typing relationship between the types they contain, their type parameters must be made **covariant**. This is represented as a `+` next to the type parameter.
+<!--omit-from-slides end-->
+
+```scala
+class Box[+A]
+```
+
+If a type `Cat` is a sub-type of `Animal`, then `Box[Cat]` is a sub-type of `Box[Animal]`.
+
+<!--omit-from-slides start-->
+This means that anywhere a `Box[Animal]` is expected, a `Box[Cat]` can be passed.
+<!--omit-from-slides end-->
+
+---
+
+## Contravariance
+
+<!--omit-from-slides start-->
+The opposite of covariance is **contravariance**, represented as a `-` next to the type parameter.
+<!--omit-from-slides end-->
+
+```scala
+class Box[-A]
+```
+
+If a type `Cat` is a sub-type of `Animal`, then `Box[Animal]` is a sub-type of `Box[Cat]`.
+
+<!--omit-from-slides start-->
+This means that anywhere a `Box[Cat]` is expected, a `Box[Animal]` can be passed.
+<!--omit-from-slides end-->
+
+---
+
+## Variance
+
+<!--omit-from-slides start-->
+In summary, there are three kinds of variance used to determine the sub-typing relationship between generic container types.
+<!--omit-from-slides end-->
+
+### Invariant
+
+`class Box[T]`
+
+Even if `A` is a sub-type of `B`, `Box[A]` and `Box[B]` have no sub-typing relationship.
+
+### Covariant
+
+`class Box[+T]`
+
+If `A` is a sub-type of `B`, `Box[A]` is a sub-type of `Box[B]`.
+
+### Contravariant
+
+`class Box[-T]`
+
+If `A` is a sub-type of `B`, `Box[B]` is a sub-type of `Box[A]`.
