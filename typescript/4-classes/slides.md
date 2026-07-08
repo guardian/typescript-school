@@ -616,3 +616,18 @@ class CurrentAccount extends BankAccount {
 // ✅ This is concrete so we can instantiate it
 const c = new CurrentAccount();
 ```
+
+---
+
+## Static methods and properties
+
+Static methods and properties are access on the class itself, not an
+instance of the class.
+
+```ts
+class CurrentAccount {
+	static interestRate: number = 0.05;
+}
+
+CurrentAccount.interestRate; // 0.05
+```
