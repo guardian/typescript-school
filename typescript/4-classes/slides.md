@@ -7,6 +7,7 @@ We'll cover:
 - Visibility modifiers
 - Modeling class heritage and relationships
 - Abstract classes
+- Static properties & methods
 
 ---
 
