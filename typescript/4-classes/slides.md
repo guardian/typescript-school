@@ -2,7 +2,7 @@
 
 We'll cover:
 
-- Basic class syntax in JavaScript
+- Basic class syntax in TypeScript
 - Adding types to class members
 - Visibility modifiers
 - Modeling class heritage and relationships
