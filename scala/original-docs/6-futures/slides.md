@@ -192,7 +192,9 @@ However, if your tasks are CPU-bound, putting them in a `Future` so that they ca
 -----------------------------------------------------------
 |           Task A           |           Task B           |
 -----------------------------------------------------------
+```
 
+```
 --------------------------------------------------------------
 |    Task A    ||    Task B    ||   Task A   ||    Task B    |
 --------------------------------------------------------------
@@ -260,11 +262,27 @@ CPU task thread pool:
 
 ## Execution Context
 
+<!--omit-from-slides start-->
 Execution contexts are Scala's way to handle the scheduling of tasks that you want to run asynchronously with Futures. You can use different execution contexts depending on the nature of the tasks being executed (e.g. IO-bound or CPU-bound), and the implementation usually involves a thread pool.
+<!--omit-from-slides end-->
 
+```
+-----------------------------------------------------------
+|           Task A           |           Task C           |
+-----------------------------------------------------------
+|------------ IO-optimised Execution Context -------------|
+
+-----------------------------------------------------------
+|                         Task B                          |
+-----------------------------------------------------------
+|------------ CPU-optimised Execution Context ------------|
+```
+
+<!--omit-from-slides start-->
 Your program might generally be doing the same kind of work, in which case it may use the same execution context for everything. Or you might specify different execution contexts for areas of work with different performance profiles.
 
 For this reason, when you're working with Futures you often have to specify an execution context for the work the Future will be doing, so that Scala knows where and how to run it.
+<!--omit-from-slides end-->
 
 ---
 
