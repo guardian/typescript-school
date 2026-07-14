@@ -134,7 +134,7 @@ object NewsService {
 
 <!--omit-from-slides start-->
 Here, we're calling `send()` from inside the `newsBang()` method, inside the `NewsService` class.
-Putting the implicit vals in the class, or in the `newsBang()` method itself, mean that the
+Putting the implicit vals in the class, or in the `newsBang()` method itself, means that the
 vals are available in the regular local scope.
 <!--omit-from-slides end-->
 
