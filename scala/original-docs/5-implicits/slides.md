@@ -274,7 +274,7 @@ implicit val c: Currency = Currency.getInstance("GBP")
 Supermarket.price("apple") // this time, the currency is implicit 
 Supermarket.price("banana")
 Supermarket.price("trebuchet")
-Supermarket.price(Seq("apple", "trebuchet"))
+Supermarket.priceShoppingList(Seq("apple", "trebuchet"))
 ```
 
 ---
