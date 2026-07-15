@@ -2,11 +2,12 @@
 
 We'll cover:
 
-- Basic class syntax in JavaScript
+- Basic class syntax in TypeScript
 - Adding types to class members
 - Visibility modifiers
 - Modeling class heritage and relationships
 - Abstract classes
+- Static properties & methods
 
 ---
 
@@ -615,4 +616,19 @@ class CurrentAccount extends BankAccount {
 
 // ✅ This is concrete so we can instantiate it
 const c = new CurrentAccount();
+```
+
+---
+
+## Static methods and properties
+
+Static methods and properties are access on the class itself, not an
+instance of the class.
+
+```ts
+class CurrentAccount {
+	static interestRate: number = 0.05;
+}
+
+CurrentAccount.interestRate; // 0.05
 ```
