@@ -28,7 +28,7 @@
 		"@guardian/package-linter": "0.5.3",
 		"@guardian/prettier": "5.0.0",
 		"@guardian/tsconfig": "0.2.0",
-		"@hono/node-server": "1.19.13",
+		"@hono/node-server": "2.0.10",
 		"@types/mdast": "4.0.1",
 		"@types/node": "24.12.4",
 		"mdast-zone": "6.0.1",
